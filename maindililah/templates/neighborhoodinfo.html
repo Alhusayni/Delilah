@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block head %}
+{{ neighbor.NeighborhoodName }}
+{% endblock %}
+
+
+{% block body %}
+
+
+    <h1>{{ neighbor.NeighborhoodName }}</h1>
+    <iframe src="{{ neighbor.Location }}" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+
+    <h3>Total Populations: </h3>
+    <h4>Saudi Populations "Male": {{ neighbor.PopulationSaudiMale }} </h4>
+    <h4>Saudi Populations "Female": {{ neighbor.PopulationSaudiFemale }} </h4>
+    <h4>Non Saudi Populations "Male": {{ neighbor.PopulationNONSaudiMale }} </h4>
+    <h4>Non Saudi Populations "Female": {{ neighbor.PopulationNONSaudiFemale}} </h4>
+    <br>
+    <h3>Number of Schools: </h3>
+    <h4>Public Schools: {{ neighbor.NumPublicSchools }}</h4>
+    <h4>Private Schools: {{ neighbor.NumPrivateSchools }}</h4>
+    <br>
+    <h3>Average Prices: </h3>
+    <h4>Lands: {{ neighbor.AveragePriceLands }} SAR</h4>
+    <h4>Apartments: {{ neighbor.AveragePriceAprt }} SAR</h4>
+    <h4>Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
+    <br>
+    <h3>Number of Public Parks: {{ neighbor.NumParks }}</h3>
+    <br>
+    <h3>Public Transportation: </h3>
+    <h4>Bus Stations: {{ neighbor.NumBusStations }}</h4>
+    <h4>Trains Stations: {{ neighbor.NumTrainStations }}</h4>
+    <br>
+    <h3>Number of Hospitals: {{ neighbor.NumHospitals }}</h3>
+
+
+{% endblock %}
