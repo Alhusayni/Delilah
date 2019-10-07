@@ -7,7 +7,9 @@
 {% block body %}
 
 
-    <h1>{{ neighbor.NeighborhoodName }}</h1>
+  <div class="row">
+    <div class="col">
+      <h1>{{ neighbor.NeighborhoodName }}</h1>
     <iframe src="{{ neighbor.Location }}" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
 
     <h3>Total Populations: </h3>
@@ -32,6 +34,24 @@
     <h4>Trains Stations: {{ neighbor.NumTrainStations }}</h4>
     <br>
     <h3>Number of Hospitals: {{ neighbor.NumHospitals }}</h3>
+    </div>
+    <div class="col">
+      <h1>Compare with any other Neighborhood: </h1>
+    <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Choose a Neighborhood  </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+         {% for n in compare %}
+         <a class="dropdown-item" href="{% url 'compare' name=neighbor.NeighborhoodName name1=n.NeighborhoodName %}">{{ n.NeighborhoodName }}</a>
+         {% endfor %}
+         </div>
+    </div>
+
+    </div>
+  </div>
+
+
+
 
 
 {% endblock %}

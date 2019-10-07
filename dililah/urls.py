@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from maindililah.views import index, mylogout, register,neighborhooddetails, profile
+from maindililah.views import index, mylogout, register,neighborhooddetails, profile, compare
 from django.contrib.auth import views as authview
 from django.conf import settings
 from django.conf.urls.static import static
@@ -29,6 +29,7 @@ urlpatterns = [
     path('register/', register, name= 'register'),
     path('neighborhood/<str:name>/', neighborhooddetails, name= 'neighborhoodinfo'),
     path('profile/', profile, name= 'profile'),
+    path('compare/<str:name>/<str:name1>', compare, name='compare')
 ]
 
 if settings.DEBUG:

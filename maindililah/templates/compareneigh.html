@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% block head %}
+Compare between
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+          <h1>{{ neighbor.NeighborhoodName }}</h1>
+    <iframe src="{{ neighbor.Location }}" width="400" height="250" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+
+    <h3>Total Populations: </h3>
+        {% if neighbor.PopulationSaudiMale > neighbor1.PopulationSaudiMale %}
+        <h4 class="text-success">Saudi Populations "Male": {{ neighbor.PopulationSaudiMale }} </h4>
+            {% else %}
+         <h4 class="text-danger">Saudi Populations "Male": {{ neighbor.PopulationSaudiMale }} </h4>
+        {% endif %}
+
+        {% if neighbor.PopulationSaudiFemale > neighbor1.PopulationSaudiFemale %}
+            <h4 class="text-success">Saudi Populations "Female": {{ neighbor.PopulationSaudiFemale }} </h4>
+            {% else %}
+             <h4 class="text-danger">Saudi Populations "Female": {{ neighbor.PopulationSaudiFemale }} </h4>
+        {% endif %}
+
+        {% if neighbor.PopulationNONSaudiMale > neighbor1.PopulationNONSaudiMale %}
+            <h4 class="text-success">Non Saudi Populations "Male": {{ neighbor.PopulationNONSaudiMale }} </h4>
+            {% else %}
+             <h4 class="text-danger">Non Saudi Populations "Male": {{ neighbor.PopulationNONSaudiMale }} </h4>
+        {% endif %}
+
+        {% if neighbor.PopulationNONSaudiFemale > neighbor1.PopulationNONSaudiFemale %}
+            <h4 class="text-success">Non Saudi Populations "Female": {{ neighbor.PopulationNONSaudiFemale}} </h4>
+            {% else %}
+             <h4 class="text-danger">Non Saudi Populations "Female": {{ neighbor.PopulationNONSaudiFemale}} </h4>
+        {% endif %}
+
+    <br>
+    <h3>Number of Schools: </h3>
+        {% if neighbor.NumPublicSchools > neighbor1.NumPublicSchools %}
+            <h4 class="text-success">Public Schools: {{ neighbor.NumPublicSchools }}</h4>
+        {% else %}
+             <h4 class="text-danger">Public Schools: {{ neighbor.NumPublicSchools }}</h4>
+        {% endif %}
+
+        {% if neighbor.NumPrivateSchools > neighbor1.NumPrivateSchools %}
+            <h4 class="text-success">Private Schools: {{ neighbor.NumPrivateSchools }}</h4>
+        {% else %}
+             <h4 class="text-danger">Private Schools: {{ neighbor.NumPrivateSchools }}</h4>
+        {% endif %}
+    <br>
+    <h3>Average Prices: </h3>
+        {% if neighbor.AveragePriceLands > neighbor1.AveragePriceLands %}
+            <h4 class="text-success">Lands: {{ neighbor.AveragePriceLands }} SAR</h4>
+        {% else %}
+             <h4 class="text-danger">Lands: {{ neighbor.AveragePriceLands }} SAR</h4>
+        {% endif %}
+
+        {% if neighbor.AveragePriceAprt > neighbor1.AveragePriceAprt %}
+            <h4 class="text-success">Apartments: {{ neighbor.AveragePriceAprt }} SAR</h4>
+        {% else %}
+             <h4 class="text-danger">Apartments: {{ neighbor.AveragePriceAprt }} SAR</h4>
+        {% endif %}
+
+        {% if neighbor.AveragePriceAprt > neighbor1.AveragePriceAprt %}
+            <h4 class="text-success">Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
+        {% else %}
+             <h4 class="text-danger">Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
+        {% endif %}
+    <br>
+        {% if neighbor.NumParks > neighbor1.NumParks %}
+            <h3 class="text-success">Number of Public Parks: {{ neighbor.NumParks }}</h3>
+        {% else %}
+             <h3 class="text-danger">Number of Public Parks: {{ neighbor.NumParks }}</h3>
+        {% endif %}
+    <br>
+    <h3>Public Transportation: </h3>
+        {% if neighbor.NumBusStations > neighbor1.NumBusStations %}
+            <h4 class="text-success">Bus Stations: {{ neighbor.NumBusStations }}</h4>
+        {% else %}
+             <h4 class="text-danger">Bus Stations: {{ neighbor.NumBusStations }}</h4>
+        {% endif %}
+
+        {% if neighbor.NumTrainStations > neighbor1.NumTrainStations %}
+            <h4 class="text-success">Trains Stations: {{ neighbor.NumTrainStations }}</h4>
+        {% else %}
+             <h4 class="text-danger">Trains Stations: {{ neighbor.NumTrainStations }}</h4>
+        {% endif %}
+
+    <br>
+        {% if neighbor.NumHospitals > neighbor1.NumHospitals %}
+            <h3 class="text-success">Number of Hospitals: {{ neighbor.NumHospitals }}</h3>
+        {% else %}
+             <h3 class="text-danger">Number of Hospitals: {{ neighbor.NumHospitals }}</h3>
+        {% endif %}
+
+    </div>
+    <div class="col">
+          <h1>{{ neighbor1.NeighborhoodName }}</h1>
+    <iframe src="{{ neighbor1.Location }}" width="400" height="250" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+
+    <h3>Total Populations: </h3>
+        {% if neighbor.PopulationSaudiMale < neighbor1.PopulationSaudiMale %}
+        <h4 class="text-success">Saudi Populations "Male": {{ neighbor1.PopulationSaudiMale }} </h4>
+            {% else %}
+         <h4 class="text-danger">Saudi Populations "Male": {{ neighbor1.PopulationSaudiMale }} </h4>
+        {% endif %}
+
+        {% if neighbor.PopulationSaudiFemale < neighbor1.PopulationSaudiFemale %}
+            <h4 class="text-success">Saudi Populations "Female": {{ neighbor1.PopulationSaudiFemale }} </h4>
+            {% else %}
+             <h4 class="text-danger">Saudi Populations "Female": {{ neighbor1.PopulationSaudiFemale }} </h4>
+        {% endif %}
+
+        {% if neighbor.PopulationNONSaudiMale < neighbor1.PopulationNONSaudiMale %}
+            <h4 class="text-success">Non Saudi Populations "Male": {{ neighbor1.PopulationNONSaudiMale }} </h4>
+            {% else %}
+             <h4 class="text-danger">Non Saudi Populations "Male": {{ neighbor1.PopulationNONSaudiMale }} </h4>
+        {% endif %}
+
+        {% if neighbor.PopulationNONSaudiFemale > neighbor1.PopulationNONSaudiFemale %}
+            <h4 class="text-success">Non Saudi Populations "Female": {{ neighbor.PopulationNONSaudiFemale}} </h4>
+            {% else %}
+             <h4 class="text-danger">Non Saudi Populations "Female": {{ neighbor.PopulationNONSaudiFemale}} </h4>
+        {% endif %}
+
+    <br>
+    <h3>Number of Schools: </h3>
+        {% if neighbor.NumPublicSchools < neighbor1.NumPublicSchools %}
+            <h4 class="text-success">Public Schools: {{ neighbor1.NumPublicSchools }}</h4>
+        {% else %}
+             <h4 class="text-danger">Public Schools: {{ neighbor1.NumPublicSchools }}</h4>
+        {% endif %}
+
+        {% if neighbor.NumPrivateSchools < neighbor1.NumPrivateSchools %}
+            <h4 class="text-success">Private Schools: {{ neighbor1.NumPrivateSchools }}</h4>
+        {% else %}
+             <h4 class="text-danger">Private Schools: {{ neighbor1.NumPrivateSchools }}</h4>
+        {% endif %}
+    <br>
+    <h3>Average Prices: </h3>
+        {% if neighbor.AveragePriceLands < neighbor1.AveragePriceLands %}
+            <h4 class="text-success">Lands: {{ neighbor1.AveragePriceLands }} SAR</h4>
+        {% else %}
+             <h4 class="text-danger">Lands: {{ neighbor1.AveragePriceLands }} SAR</h4>
+        {% endif %}
+
+        {% if neighbor.AveragePriceAprt < neighbor1.AveragePriceAprt %}
+            <h4 class="text-success">Apartments: {{ neighbor1.AveragePriceAprt }} SAR</h4>
+        {% else %}
+             <h4 class="text-danger">Apartments: {{ neighbor1.AveragePriceAprt }} SAR</h4>
+        {% endif %}
+
+        {% if neighbor.AveragePriceAprt < neighbor1.AveragePriceAprt %}
+            <h4 class="text-success">Villas : {{ neighbor1.AveragePriceVilla}} SAR</h4>
+        {% else %}
+             <h4 class="text-danger">Villas : {{ neighbor1.AveragePriceVilla}} SAR</h4>
+        {% endif %}
+    <br>
+        {% if neighbor.NumParks < neighbor1.NumParks %}
+            <h3 class="text-success">Number of Public Parks: {{ neighbor1.NumParks }}</h3>
+        {% else %}
+             <h3 class="text-danger">Number of Public Parks: {{ neighbor1.NumParks }}</h3>
+        {% endif %}
+    <br>
+    <h3>Public Transportation: </h3>
+        {% if neighbor.NumBusStations < neighbor1.NumBusStations %}
+            <h4 class="text-success">Bus Stations: {{ neighbor1.NumBusStations }}</h4>
+        {% else %}
+             <h4 class="text-danger">Bus Stations: {{ neighbor1.NumBusStations }}</h4>
+        {% endif %}
+
+        {% if neighbor.NumTrainStations < neighbor1.NumTrainStations %}
+            <h4 class="text-success">Trains Stations: {{ neighbor.NumTrainStations }}</h4>
+        {% else %}
+             <h4 class="text-danger">Trains Stations: {{ neighbor.NumTrainStations }}</h4>
+        {% endif %}
+
+    <br>
+        {% if neighbor.NumHospitals < neighbor1.NumHospitals %}
+            <h3 class="text-success">Number of Hospitals: {{ neighbor.NumHospitals }}</h3>
+        {% else %}
+             <h3 class="text-danger">Number of Hospitals: {{ neighbor.NumHospitals }}</h3>
+        {% endif %}
+
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+</div>
+
+{% endblock %}
