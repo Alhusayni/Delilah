@@ -64,7 +64,7 @@ Compare between
              <h4 class="text-danger">Apartments: {{ neighbor.AveragePriceAprt }} SAR</h4>
         {% endif %}
 
-        {% if neighbor.AveragePriceAprt > neighbor1.AveragePriceAprt %}
+        {% if neighbor.AveragePriceVilla > neighbor1.AveragePriceVilla %}
             <h4 class="text-success">Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
         {% else %}
              <h4 class="text-danger">Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
@@ -120,10 +120,10 @@ Compare between
              <h4 class="text-danger">Non Saudi Populations "Male": {{ neighbor1.PopulationNONSaudiMale }} </h4>
         {% endif %}
 
-        {% if neighbor.PopulationNONSaudiFemale > neighbor1.PopulationNONSaudiFemale %}
-            <h4 class="text-success">Non Saudi Populations "Female": {{ neighbor.PopulationNONSaudiFemale}} </h4>
+        {% if neighbor.PopulationNONSaudiFemale < neighbor1.PopulationNONSaudiFemale %}
+            <h4 class="text-success">Non Saudi Populations "Female": {{ neighbor1.PopulationNONSaudiFemale}} </h4>
             {% else %}
-             <h4 class="text-danger">Non Saudi Populations "Female": {{ neighbor.PopulationNONSaudiFemale}} </h4>
+             <h4 class="text-danger">Non Saudi Populations "Female": {{ neighbor1.PopulationNONSaudiFemale}} </h4>
         {% endif %}
 
     <br>
@@ -153,7 +153,7 @@ Compare between
              <h4 class="text-danger">Apartments: {{ neighbor1.AveragePriceAprt }} SAR</h4>
         {% endif %}
 
-        {% if neighbor.AveragePriceAprt < neighbor1.AveragePriceAprt %}
+        {% if neighbor.AveragePriceVilla < neighbor1.AveragePriceVilla %}
             <h4 class="text-success">Villas : {{ neighbor1.AveragePriceVilla}} SAR</h4>
         {% else %}
              <h4 class="text-danger">Villas : {{ neighbor1.AveragePriceVilla}} SAR</h4>
@@ -173,16 +173,16 @@ Compare between
         {% endif %}
 
         {% if neighbor.NumTrainStations < neighbor1.NumTrainStations %}
-            <h4 class="text-success">Trains Stations: {{ neighbor.NumTrainStations }}</h4>
+            <h4 class="text-success">Trains Stations: {{ neighbor1.NumTrainStations }}</h4>
         {% else %}
-             <h4 class="text-danger">Trains Stations: {{ neighbor.NumTrainStations }}</h4>
+             <h4 class="text-danger">Trains Stations: {{ neighbor1.NumTrainStations }}</h4>
         {% endif %}
 
     <br>
         {% if neighbor.NumHospitals < neighbor1.NumHospitals %}
-            <h3 class="text-success">Number of Hospitals: {{ neighbor.NumHospitals }}</h3>
+            <h3 class="text-success">Number of Hospitals: {{ neighbor1.NumHospitals }}</h3>
         {% else %}
-             <h3 class="text-danger">Number of Hospitals: {{ neighbor.NumHospitals }}</h3>
+             <h3 class="text-danger">Number of Hospitals: {{ neighbor1.NumHospitals }}</h3>
         {% endif %}
 
 
