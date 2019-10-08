@@ -45,7 +45,12 @@
          <a class="dropdown-item" href="{% url 'compare' name=neighbor.NeighborhoodName name1=n.NeighborhoodName %}">{{ n.NeighborhoodName }}</a>
          {% endfor %}
          </div>
+
+
+
     </div>
+
+
 
     </div>
   </div>
@@ -53,5 +58,48 @@
 
 
 
+<br><br><br>
+     <div class="row">
+
+    {% if form != None %}
+        <form method="post">
+     {% csrf_token %}
+     {{ form.as_p }}
+    <button type="submit" class="btn btn-outline-primary">Post</button>
+        </form>
+    {% else %}
+    <h3 class="text-danger">Please <a href="{% url 'login' %}" > Sign in </a>or <a href="{% url 'register' %}">Create an account </a>  to review :)</h3>
+    {% endif %}
+
+    </div>
+    <br>
+        <div class="row">
+         {% for r in reviews %}
+            <div class="col">
+                <h5>{{ r.review }}</h5>
+            <br>
+            <h5>Streets Quality: {{ r.rating1 }}  -  Traffic {{ r.rating2 }}  -  Facilities {{ r.rating3 }}  - Outdoor Activities {{ r.rating4 }} </h5>
+                 <br>
+            <h6>Created By {{ r.user }}  on {{ r.created }}</h6>
+            </div>
+        </div>
+
+
+
+
+
+        {% endfor %}
+    </div>
+
+
+
+
+
+
+
+
 
 {% endblock %}
+
+
+

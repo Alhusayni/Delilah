@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block head %}
+Home
+{% endblock %}
+
+
+{% block body %}
+
+    <h1>Good news your review has been posted !!!</h1>
+
+    <h3>Redirect to the home page after 2 seconds....</h3>
+
+    <script>
+    function redirect(){
+       window.location.href = "/";
+    }
+    setTimeout(redirect, 2000);
+</script>
+
+    <h2><a href="/"> Or you can click here</a></h2>
+
+
+{% endblock %}

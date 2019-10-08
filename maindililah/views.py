@@ -1,8 +1,10 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import logout
-from maindililah.forms import RegistrationForm
+
+from maindililah import models
+from maindililah.forms import RegistrationForm, ReviewForm
 from django.contrib.auth.models import User
-from maindililah.models import UserProfile, Neighborhood
+from maindililah.models import UserProfile, Neighborhood, UsersReview
 
 
 # Create your views here.
@@ -33,13 +35,34 @@ def register(request):
 
 
 def neighborhooddetails(request, name):
-    obj = Neighborhood.objects.get(NeighborhoodName=name)
-    obj1 = Neighborhood.objects.exclude(NeighborhoodName=name)
-    args = {
-        'neighbor': obj,
-        'compare': obj1
-    }
-    return render(request, 'neighborhoodinfo.html', args)
+    if request.method == "GET":
+        if request.user.is_authenticated:
+            form = ReviewForm()
+        else:
+            form = None
+        obj = Neighborhood.objects.get(NeighborhoodName=name)
+        obj1 = Neighborhood.objects.exclude(NeighborhoodName=name)
+        rev = UsersReview.objects.filter(neighborhoodName=obj.id).order_by('-created')
+        args = {
+            'neighbor': obj,
+            'compare': obj1,
+            'form': form,
+            'reviews': rev
+        }
+        return render(request, 'neighborhoodinfo.html', args)
+    form = ReviewForm(request.POST or None)
+    if form.is_valid():
+        newreview = models.UsersReview()
+        newreview.user = request.user
+        newreview.neighborhoodName = Neighborhood.objects.get(NeighborhoodName=name)
+        newreview.review = form.cleaned_data['review']
+        newreview.rating1 = form.cleaned_data['Streets_Quality']
+        newreview.rating2 = form.cleaned_data['Traffic']
+        newreview.rating3 = form.cleaned_data['Public_Schools']
+        newreview.rating4 = form.cleaned_data['Outdoor_Activities']
+        newreview.save()
+    args = {form: 'form'}
+    return render(request, 'posted.html', args)
 
 
 def profile(request):

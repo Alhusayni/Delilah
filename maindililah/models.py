@@ -54,4 +54,17 @@ class Neighborhood(models.Model):
         return self.NeighborhoodName
 
 
-"""class UsersReview(models.Model):"""
+class UsersReview(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    neighborhoodName = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
+    review = models.TextField(blank=False)
+    rating1 = models.IntegerField(choices=list(zip(range(1, 6), range(1, 6))), blank=False)
+    rating2 = models.IntegerField(choices=list(zip(range(1, 6), range(1, 6))), blank=False)
+    rating3 = models.IntegerField(choices=list(zip(range(1, 6), range(1, 6))), blank=False)
+    rating4 = models.IntegerField(choices=list(zip(range(1, 6), range(1, 6))), blank=False)
+    created = models.DateTimeField(auto_now_add=True,null=True, blank=True)
+    def __str__(self):
+        return str(self.user)
+
+
+
