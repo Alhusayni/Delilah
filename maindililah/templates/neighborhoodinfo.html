@@ -9,7 +9,12 @@
 
   <div class="row">
     <div class="col">
-      <h1>{{ neighbor.NeighborhoodName }}</h1>
+        <h1>{{ neighbor.NeighborhoodName }}</h1>
+        <h2>Total average {{ totalavg }}</h2>
+        <h3>Average reviews of Streets Quality :{% for key,avg in averg.0.items %} {{ avg }} {% endfor %} </h3>
+        <h3>Average reviews of Traffic  :{% for key,avg in averg.1.items %} {{ avg }} {% endfor %} </h3>
+        <h3>Average reviews of Public Schools :{% for key,avg in averg.2.items %} {{ avg }} {% endfor %} </h3>
+        <h3>Average reviews of Outdoor Activities :{% for key,avg in averg.3.items %} {{ avg }} {% endfor %} </h3>
     <iframe src="{{ neighbor.Location }}" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
 
     <h3>Total Populations: </h3>
@@ -78,7 +83,7 @@
             <div class="col">
                 <h5>{{ r.review }}</h5>
             <br>
-            <h5>Streets Quality: {{ r.rating1 }}  -  Traffic {{ r.rating2 }}  -  Facilities {{ r.rating3 }}  - Outdoor Activities {{ r.rating4 }} </h5>
+            <h5>Streets Quality: {{ r.rating1 }}  -  Traffic {{ r.rating2 }}  -  Public Schools {{ r.rating3 }}  - Outdoor Activities {{ r.rating4 }} </h5>
                  <br>
             <h6>Created By {{ r.user }}  on {{ r.created }}</h6>
             </div>

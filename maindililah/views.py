@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import logout
-
+from django.db.models import Avg, aggregates
 from maindililah import models
 from maindililah.forms import RegistrationForm, ReviewForm
 from django.contrib.auth.models import User
@@ -43,11 +43,21 @@ def neighborhooddetails(request, name):
         obj = Neighborhood.objects.get(NeighborhoodName=name)
         obj1 = Neighborhood.objects.exclude(NeighborhoodName=name)
         rev = UsersReview.objects.filter(neighborhoodName=obj.id).order_by('-created')
+        averg = [rev.aggregate(Avg('rating1')), rev.aggregate(Avg('rating2')), rev.aggregate(Avg('rating3')),
+                 rev.aggregate(Avg('rating4')), ]
+        test= 0
+        for n in rev:
+            test = n.rating1 + n.rating2 + n.rating3 + n.rating4 + test
+        count = UsersReview.objects.filter(neighborhoodName=obj.id).count()
+        categories = 4
+        test = (test/count)/ categories
         args = {
             'neighbor': obj,
             'compare': obj1,
             'form': form,
-            'reviews': rev
+            'reviews': rev,
+            'averg' : averg,
+            'totalavg': test
         }
         return render(request, 'neighborhoodinfo.html', args)
     form = ReviewForm(request.POST or None)
