@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block head %}
+Error
+{% endblock %}
+
+
+{% block body %}
+    <h1>An error occurred</h1>
+    <h3>Redirect to the home page after 2 seconds....</h3>
+
+    <script>
+    function redirect(){
+       window.location.href = "/";
+    }
+    setTimeout(redirect, 2000);
+</script>
+
+
+{% endblock %}

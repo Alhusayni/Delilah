@@ -1,9 +1,10 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import logout
-from django.db.models import Avg, aggregates
+from django.db.models import Avg
 from maindililah import models
 from maindililah.forms import RegistrationForm, ReviewForm
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 from maindililah.models import UserProfile, Neighborhood, UsersReview
 
 
@@ -36,28 +37,34 @@ def register(request):
 
 def neighborhooddetails(request, name):
     if request.method == "GET":
-        if request.user.is_authenticated:
-            form = ReviewForm()
-        else:
-            form = None
         obj = Neighborhood.objects.get(NeighborhoodName=name)
         obj1 = Neighborhood.objects.exclude(NeighborhoodName=name)
         rev = UsersReview.objects.filter(neighborhoodName=obj.id).order_by('-created')
+        if request.user.is_authenticated:
+            form = ReviewForm()
+            is_liked = False
+        else:
+            form = None
+            is_liked = None
         averg = [rev.aggregate(Avg('rating1')), rev.aggregate(Avg('rating2')), rev.aggregate(Avg('rating3')),
                  rev.aggregate(Avg('rating4')), ]
-        test= 0
+        test = 0
         for n in rev:
             test = n.rating1 + n.rating2 + n.rating3 + n.rating4 + test
         count = UsersReview.objects.filter(neighborhoodName=obj.id).count()
         categories = 4
-        test = (test/count)/ categories
+        test = (test / count) / categories
+
         args = {
             'neighbor': obj,
             'compare': obj1,
             'form': form,
             'reviews': rev,
-            'averg' : averg,
-            'totalavg': test
+            'averg': averg,
+            'totalavg': test,
+            'count': count,
+            'is_liked': is_liked,
+            'request':request.user
         }
         return render(request, 'neighborhoodinfo.html', args)
     form = ReviewForm(request.POST or None)
@@ -82,8 +89,47 @@ def profile(request):
 def compare(request, name, name1):
     obj = Neighborhood.objects.get(NeighborhoodName=name)
     obj1 = Neighborhood.objects.get(NeighborhoodName=name1)
+    rev = UsersReview.objects.filter(neighborhoodName=obj.id)
+    rev1 = UsersReview.objects.filter(neighborhoodName=obj1.id)
+    test = 0
+    test1 = 0
+    for n in rev:
+        test = n.rating1 + n.rating2 + n.rating3 + n.rating4 + test
+    for s in rev1:
+        test1 = s.rating1 + s.rating2 + s.rating3 + s.rating4 + test1
+    count = UsersReview.objects.filter(neighborhoodName=obj.id).count()
+    count1 = UsersReview.objects.filter(neighborhoodName=obj1.id).count()
+    categories = 4
+    test = (test / count) / categories
+    test1 = (test1 / count1) / categories
+
     args = {
         'neighbor': obj,
-        'neighbor1': obj1
+        'neighbor1': obj1,
+        'totalavg': test,
+        'totalavg1': test1
+
     }
     return render(request, 'compareneigh.html', args)
+
+
+def likereview(request):
+    review = get_object_or_404(UsersReview, id=request.POST.get('reviewid'))
+    is_liked = False
+    if review.like.filter(id=request.user.id).exists():
+        review.like.remove(request.user)
+        is_liked = False
+    else:
+        review.like.add(request.user)
+        is_liked = True
+    redir = ('/neighborhood/' + str(review.neighborhoodName))
+    return redirect(redir)
+
+
+def deletereview(request):
+    review = get_object_or_404(UsersReview, id=request.POST.get('revid'))
+    if request.user != review.user:
+        return render(request, 'error.html')
+    review.delete()
+    redir = ('/neighborhood/' + str(review.neighborhoodName))
+    return redirect(redir)

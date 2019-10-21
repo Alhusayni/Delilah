@@ -63,8 +63,12 @@ class UsersReview(models.Model):
     rating3 = models.IntegerField(choices=list(zip(range(1, 6), range(1, 6))), blank=False)
     rating4 = models.IntegerField(choices=list(zip(range(1, 6), range(1, 6))), blank=False)
     created = models.DateTimeField(auto_now_add=True,null=True, blank=True)
+    like = models.ManyToManyField(User, related_name= 'likes', blank=True)
     def __str__(self):
         return str(self.user)
+
+    def total(self):
+        return self.like.count()
 
 
 

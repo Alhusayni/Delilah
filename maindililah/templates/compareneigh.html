@@ -11,6 +11,12 @@
     <div class="col">
           <h1>{{ neighbor.NeighborhoodName }}</h1>
     <iframe src="{{ neighbor.Location }}" width="400" height="250" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        {% if totalavg > totalavg1 %}
+        <h2  class="text-success" >Total average {{ totalavg }}</h2>
+        {% else %}
+        <h2  class="text-danger" >Total average {{ totalavg }}</h2>
+        {% endif %}
+
 
     <h3>Total Populations: </h3>
         {% if neighbor.PopulationSaudiMale > neighbor1.PopulationSaudiMale %}
@@ -100,6 +106,12 @@
     <div class="col">
           <h1>{{ neighbor1.NeighborhoodName }}</h1>
     <iframe src="{{ neighbor1.Location }}" width="400" height="250" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        {% if totalavg < totalavg1 %}
+        <h2  class="text-success" >Total average {{ totalavg1 }}</h2>
+        {% else %}
+        <h2  class="text-danger" >Total average {{ totalavg1 }}</h2>
+        {% endif %}
+
 
     <h3>Total Populations: </h3>
         {% if neighbor.PopulationSaudiMale < neighbor1.PopulationSaudiMale %}

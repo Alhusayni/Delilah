@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
-from maindililah.views import index, mylogout, register,neighborhooddetails, profile, compare
+from maindililah.views import index, mylogout, register,neighborhooddetails, profile, compare, likereview,deletereview
 from django.contrib.auth import views as authview
 from django.conf import settings
 from django.conf.urls.static import static
@@ -31,6 +31,8 @@ urlpatterns = [
     path('neighborhood/<str:name>/', neighborhooddetails, name= 'neighborhoodinfo'),
     path('profile/', profile, name= 'profile'),
     path('compare/<str:name>/<str:name1>', compare, name='compare'),
+    path('like/', likereview, name='likereview'),
+    path('delete/', deletereview, name='deletereview'),
 
 ]
 

@@ -11,10 +11,11 @@
     <div class="col">
         <h1>{{ neighbor.NeighborhoodName }}</h1>
         <h2>Total average {{ totalavg }}</h2>
-        <h3>Average reviews of Streets Quality :{% for key,avg in averg.0.items %} {{ avg }} {% endfor %} </h3>
-        <h3>Average reviews of Traffic  :{% for key,avg in averg.1.items %} {{ avg }} {% endfor %} </h3>
-        <h3>Average reviews of Public Schools :{% for key,avg in averg.2.items %} {{ avg }} {% endfor %} </h3>
-        <h3>Average reviews of Outdoor Activities :{% for key,avg in averg.3.items %} {{ avg }} {% endfor %} </h3>
+        <h4>Average reviews of Streets Quality :{% for key,avg in averg.0.items %} {{ avg }} {% endfor %} </h4>
+        <h4>Average reviews of Traffic  :{% for key,avg in averg.1.items %} {{ avg }} {% endfor %} </h4>
+        <h4>Average reviews of Public Schools :{% for key,avg in averg.2.items %} {{ avg }} {% endfor %} </h4>
+        <h4>Average reviews of Outdoor Activities :{% for key,avg in averg.3.items %} {{ avg }} {% endfor %} </h4>
+        <h6>Based on {{ count }} users' reviews</h6>
     <iframe src="{{ neighbor.Location }}" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
 
     <h3>Total Populations: </h3>
@@ -86,6 +87,22 @@
             <h5>Streets Quality: {{ r.rating1 }}  -  Traffic {{ r.rating2 }}  -  Public Schools {{ r.rating3 }}  - Outdoor Activities {{ r.rating4 }} </h5>
                  <br>
             <h6>Created By {{ r.user }}  on {{ r.created }}</h6>
+
+            <form action="{% url 'likereview' %}" method="post"  >
+                {% csrf_token %}
+                {% if is_liked == None %}
+                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-danger btn-sm" disabled>Only Users can like</button><p>  {{ r.total }} like{{ total|pluralize }} </p>
+                {% else %}
+                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm"  >👍</button><p>  {{ r.total }}  like{{ total|pluralize }} </p>
+                {% endif %}
+              </form>
+            {% if request.id == r.user.id %}
+                <form action="{% url 'deletereview' %}" method="post">
+              {% csrf_token %}
+              <button type="submit" name="revid" value="{{ r.id }}" class="btn btn-danger">Delete</button>
+            </form>
+            {% endif %}
+
             </div>
         </div>
 
@@ -94,6 +111,8 @@
 
 
         {% endfor %}
+
+
     </div>
 
 
