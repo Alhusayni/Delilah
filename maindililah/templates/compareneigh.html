@@ -44,19 +44,6 @@
         {% endif %}
 
     <br>
-    <h3>Number of Schools: </h3>
-        {% if neighbor.NumPublicSchools > neighbor1.NumPublicSchools %}
-            <h4 class="text-success">Public Schools: {{ neighbor.NumPublicSchools }}</h4>
-        {% else %}
-             <h4 class="text-danger">Public Schools: {{ neighbor.NumPublicSchools }}</h4>
-        {% endif %}
-
-        {% if neighbor.NumPrivateSchools > neighbor1.NumPrivateSchools %}
-            <h4 class="text-success">Private Schools: {{ neighbor.NumPrivateSchools }}</h4>
-        {% else %}
-             <h4 class="text-danger">Private Schools: {{ neighbor.NumPrivateSchools }}</h4>
-        {% endif %}
-    <br>
     <h3>Average Prices: </h3>
         {% if neighbor.AveragePriceLands > neighbor1.AveragePriceLands %}
             <h4 class="text-success">Lands: {{ neighbor.AveragePriceLands }} SAR</h4>
@@ -74,6 +61,20 @@
             <h4 class="text-success">Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
         {% else %}
              <h4 class="text-danger">Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
+        {% endif %}
+
+    <br>
+    <h3>Number of Schools: </h3>
+        {% if neighbor.NumPublicSchools > neighbor1.NumPublicSchools %}
+            <h4 class="text-success">Public Schools: {{ neighbor.NumPublicSchools }}</h4>
+        {% else %}
+             <h4 class="text-danger">Public Schools: {{ neighbor.NumPublicSchools }}</h4>
+        {% endif %}
+
+        {% if neighbor.NumPrivateSchools > neighbor1.NumPrivateSchools %}
+            <h4 class="text-success">Private Schools: {{ neighbor.NumPrivateSchools }}</h4>
+        {% else %}
+             <h4 class="text-danger">Private Schools: {{ neighbor.NumPrivateSchools }}</h4>
         {% endif %}
     <br>
         {% if neighbor.NumParks > neighbor1.NumParks %}
@@ -139,19 +140,6 @@
         {% endif %}
 
     <br>
-    <h3>Number of Schools: </h3>
-        {% if neighbor.NumPublicSchools < neighbor1.NumPublicSchools %}
-            <h4 class="text-success">Public Schools: {{ neighbor1.NumPublicSchools }}</h4>
-        {% else %}
-             <h4 class="text-danger">Public Schools: {{ neighbor1.NumPublicSchools }}</h4>
-        {% endif %}
-
-        {% if neighbor.NumPrivateSchools < neighbor1.NumPrivateSchools %}
-            <h4 class="text-success">Private Schools: {{ neighbor1.NumPrivateSchools }}</h4>
-        {% else %}
-             <h4 class="text-danger">Private Schools: {{ neighbor1.NumPrivateSchools }}</h4>
-        {% endif %}
-    <br>
     <h3>Average Prices: </h3>
         {% if neighbor.AveragePriceLands < neighbor1.AveragePriceLands %}
             <h4 class="text-success">Lands: {{ neighbor1.AveragePriceLands }} SAR</h4>
@@ -169,6 +157,20 @@
             <h4 class="text-success">Villas : {{ neighbor1.AveragePriceVilla}} SAR</h4>
         {% else %}
              <h4 class="text-danger">Villas : {{ neighbor1.AveragePriceVilla}} SAR</h4>
+        {% endif %}
+
+    <br>
+    <h3>Number of Schools: </h3>
+        {% if neighbor.NumPublicSchools < neighbor1.NumPublicSchools %}
+            <h4 class="text-success">Public Schools: {{ neighbor1.NumPublicSchools }}</h4>
+        {% else %}
+             <h4 class="text-danger">Public Schools: {{ neighbor1.NumPublicSchools }}</h4>
+        {% endif %}
+
+        {% if neighbor.NumPrivateSchools < neighbor1.NumPrivateSchools %}
+            <h4 class="text-success">Private Schools: {{ neighbor1.NumPrivateSchools }}</h4>
+        {% else %}
+             <h4 class="text-danger">Private Schools: {{ neighbor1.NumPrivateSchools }}</h4>
         {% endif %}
     <br>
         {% if neighbor.NumParks < neighbor1.NumParks %}

@@ -33,7 +33,7 @@ class RegistrationForm(UserCreationForm):
 class ReviewForm(forms.Form):
     CHOICES = (('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'),)
     review = forms.CharField(widget=forms.Textarea)
-    Streets_Quality = forms.ChoiceField(choices=CHOICES)
+    Public_Transportation = forms.ChoiceField(choices=CHOICES)
     Traffic = forms.ChoiceField(choices=CHOICES)
     Public_Schools = forms.ChoiceField(choices=CHOICES)
     Outdoor_Activities = forms.ChoiceField(choices=CHOICES)

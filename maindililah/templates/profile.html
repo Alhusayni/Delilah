@@ -5,12 +5,38 @@ Home
 
 
 {% block body %}
+<div class="row">
+    <div class="col">
+        <h1>{{ user.username }} Profile</h1>
+        <img src="{{ user.userprofile.profile_picture.url }}" class="rounded" height="180" width="180">
+        <p>Email: {{ user.email }}</p>
+        <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+        <p>City: {{ user.userprofile.city }}</p>
+        <p>Neighborhood: {{ user.userprofile.neighborhood }}</p>
 
-    <h1>{{ user.username }} Profile</h1>
-    <p>Email: {{ user.email }}</p>
-    <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
-    <p>City: {{ user.userprofile.city }}</p>
-    <p>Neighborhood: {{ user.userprofile.neighborhood }}</p>
-    <img src="{{ user.userprofile.profile_picture.url }}">
+    </div>
 
+    <div class="col">
+          <h1>Reviews</h1>
+            <div class="row">
+
+            <div class="col">
+                <h4>I lived here for 7 years, I really like Almaseef neighborhood. it's the Best Neighborhood ever !!</h4>
+            <br>
+            <h5>Public Transportation: 3 - Traffic 5 - Public Schools 5 - Outdoor Activities 5 </h5>
+                 <br>
+            <h6>Created on Oct. 21, 2019, 4:12 a.m.</h6>
+
+            <form action="" method="post"  >
+                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm"  >👍</button><p>  2 likes </p>
+
+              </form>
+
+                <form action="" method="post">
+
+              <button type="submit" name="revid" value="{{ r.id }}" class="btn btn-danger">Delete</button>
+            </form>
+
+    </div>
+                </div>
 {% endblock %}

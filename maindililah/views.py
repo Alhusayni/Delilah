@@ -73,7 +73,7 @@ def neighborhooddetails(request, name):
         newreview.user = request.user
         newreview.neighborhoodName = Neighborhood.objects.get(NeighborhoodName=name)
         newreview.review = form.cleaned_data['review']
-        newreview.rating1 = form.cleaned_data['Streets_Quality']
+        newreview.rating1 = form.cleaned_data['Public_Transportation']
         newreview.rating2 = form.cleaned_data['Traffic']
         newreview.rating3 = form.cleaned_data['Public_Schools']
         newreview.rating4 = form.cleaned_data['Outdoor_Activities']
