@@ -37,3 +37,10 @@ class ReviewForm(forms.Form):
     Traffic = forms.ChoiceField(choices=CHOICES)
     Public_Schools = forms.ChoiceField(choices=CHOICES)
     Outdoor_Activities = forms.ChoiceField(choices=CHOICES)
+
+
+class CompareCat(forms.Form):
+    CPrice = (('0', 'Low Price'), ('1', 'High Price'))
+    CPopulation = (('0', 'Fewer People'), ('1', 'More People'))
+    Price= forms.ChoiceField(choices=CPrice)
+    Population = forms.ChoiceField(choices=CPopulation)

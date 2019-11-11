@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import logout
 from django.db.models import Avg
 from maindililah import models
-from maindililah.forms import RegistrationForm, ReviewForm
+from maindililah.forms import RegistrationForm, ReviewForm, CompareCat
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from maindililah.models import UserProfile, Neighborhood, UsersReview
@@ -54,6 +54,7 @@ def neighborhooddetails(request, name):
         count = UsersReview.objects.filter(neighborhoodName=obj.id).count()
         categories = 4
         test = (test / count) / categories
+        compform = CompareCat()
 
         args = {
             'neighbor': obj,
@@ -64,7 +65,8 @@ def neighborhooddetails(request, name):
             'totalavg': test,
             'count': count,
             'is_liked': is_liked,
-            'request':request.user
+            'request': request.user,
+            'compform': compform
         }
         return render(request, 'neighborhoodinfo.html', args)
     form = ReviewForm(request.POST or None)
@@ -133,3 +135,42 @@ def deletereview(request):
     review.delete()
     redir = ('/neighborhood/' + str(review.neighborhoodName))
     return redirect(redir)
+
+
+def comparecategory(request, name, name1):
+    obj = Neighborhood.objects.get(NeighborhoodName=name)
+    obj1 = Neighborhood.objects.get(NeighborhoodName=name1)
+    rev = UsersReview.objects.filter(neighborhoodName=obj.id)
+    rev1 = UsersReview.objects.filter(neighborhoodName=obj1.id)
+    test = 0
+    test1 = 0
+    for n in rev:
+        test = n.rating1 + n.rating2 + n.rating3 + n.rating4 + test
+    for s in rev1:
+        test1 = s.rating1 + s.rating2 + s.rating3 + s.rating4 + test1
+    count = UsersReview.objects.filter(neighborhoodName=obj.id).count()
+    count1 = UsersReview.objects.filter(neighborhoodName=obj1.id).count()
+    categories = 4
+    test = (test / count) / categories
+    test1 = (test1 / count1) / categories
+    price= request.POST.get('Price')
+    population= request.POST.get('Population')
+    nprice = 'High Price'
+    npop = 'More Population'
+    if price == '0':
+        nprice = 'Low Price'
+    if population == '0':
+        npop = 'Fewer Population'
+
+    args = {
+        'neighbor': obj,
+        'neighbor1': obj1,
+        'totalavg': test,
+        'totalavg1': test1,
+        'population': population,
+        'price': price,
+        'nprice': nprice,
+        'npop': npop
+
+    }
+    return render(request, 'catcompare.html', args)

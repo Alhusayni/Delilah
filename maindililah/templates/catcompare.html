@@ -6,26 +6,10 @@
 
 {% block body %}
 
+
 <div class="container">
-    <h1>Category Comparison</h1>
-
-    <form action="{% url 'comparecategory' name=neighbor.NeighborhoodName name1=neighbor1.NeighborhoodName %}" method="post">
-        {% csrf_token %}
-        <label>Price:</label>
-        <select name="Price">
-             <option value="0">Low Price</option>
-             <option value="1">High Price</option>
-        </select>
-        <label>Population:</label>
-        <select name="Population" id="id_Population">
-            <option value="0">Fewer People</option>
-            <option value="1">More People</option>
-        </select>
-
-        <button type="submit" class="btn btn-warning">Compare!</button>
-    </form>
-
-
+  <h1>Categories Comparison</h1>
+      <h3>Preferring: {{ npop }} and {{ nprice }}</h3>
   <div class="row">
     <div class="col">
           <h1>{{ neighbor.NeighborhoodName }}</h1>
@@ -36,7 +20,21 @@
         <h2  class="text-danger" >Total average {{ totalavg }}</h2>
         {% endif %}
 
+    {% if population == '0' %}
+        <h3>Total Populations: </h3>
+        {% if neighbor.PopulationSaudiMale < neighbor1.PopulationSaudiMale %}
+        <h4 class="text-success">Populations "Male": {{ neighbor.PopulationSaudiMale }} </h4>
+            {% else %}
+         <h4 class="text-danger">Populations "Male": {{ neighbor.PopulationSaudiMale }} </h4>
+        {% endif %}
 
+        {% if neighbor.PopulationSaudiFemale < neighbor1.PopulationSaudiFemale %}
+            <h4 class="text-success">Populations "Female": {{ neighbor.PopulationSaudiFemale }} </h4>
+            {% else %}
+             <h4 class="text-danger">Populations "Female": {{ neighbor.PopulationSaudiFemale }} </h4>
+        {% endif %}
+
+    {% else %}
     <h3>Total Populations: </h3>
         {% if neighbor.PopulationSaudiMale > neighbor1.PopulationSaudiMale %}
         <h4 class="text-success">Populations "Male": {{ neighbor.PopulationSaudiMale }} </h4>
@@ -50,9 +48,29 @@
              <h4 class="text-danger">Populations "Female": {{ neighbor.PopulationSaudiFemale }} </h4>
         {% endif %}
 
-
+    {% endif %}
     <br>
     <h3>Average Prices: </h3>
+    {% if price == '0' %}
+        {% if neighbor.AveragePriceLands < neighbor1.AveragePriceLands %}
+            <h4 class="text-success">Lands: {{ neighbor.AveragePriceLands }} SAR</h4>
+        {% else %}
+             <h4 class="text-danger">Lands: {{ neighbor.AveragePriceLands }} SAR</h4>
+        {% endif %}
+
+        {% if neighbor.AveragePriceAprt < neighbor1.AveragePriceAprt %}
+            <h4 class="text-success">Apartments: {{ neighbor.AveragePriceAprt }} SAR</h4>
+        {% else %}
+             <h4 class="text-danger">Apartments: {{ neighbor.AveragePriceAprt }} SAR</h4>
+        {% endif %}
+
+        {% if neighbor.AveragePriceVilla < neighbor1.AveragePriceVilla %}
+            <h4 class="text-success">Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
+        {% else %}
+             <h4 class="text-danger">Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
+        {% endif %}
+
+    {% else %}
         {% if neighbor.AveragePriceLands > neighbor1.AveragePriceLands %}
             <h4 class="text-success">Lands: {{ neighbor.AveragePriceLands }} SAR</h4>
         {% else %}
@@ -71,6 +89,7 @@
              <h4 class="text-danger">Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
         {% endif %}
 
+    {% endif %}
     <br>
     <h3>Schools: </h3>
         {% if neighbor.NumPublicSchools > neighbor1.NumPublicSchools %}
@@ -123,6 +142,20 @@
 
 
     <h3>Total Populations: </h3>
+    {% if population == '0' %}
+        {% if neighbor.PopulationSaudiMale > neighbor1.PopulationSaudiMale %}
+        <h4 class="text-success">Populations "Male": {{ neighbor1.PopulationSaudiMale }} </h4>
+            {% else %}
+         <h4 class="text-danger">Populations "Male": {{ neighbor1.PopulationSaudiMale }} </h4>
+        {% endif %}
+
+        {% if neighbor.PopulationSaudiFemale > neighbor1.PopulationSaudiFemale %}
+            <h4 class="text-success">Populations "Female": {{ neighbor1.PopulationSaudiFemale }} </h4>
+            {% else %}
+             <h4 class="text-danger">Populations "Female": {{ neighbor1.PopulationSaudiFemale }} </h4>
+        {% endif %}
+
+    {% else %}
         {% if neighbor.PopulationSaudiMale < neighbor1.PopulationSaudiMale %}
         <h4 class="text-success">Populations "Male": {{ neighbor1.PopulationSaudiMale }} </h4>
             {% else %}
@@ -134,10 +167,31 @@
             {% else %}
              <h4 class="text-danger">Populations "Female": {{ neighbor1.PopulationSaudiFemale }} </h4>
         {% endif %}
+    {% endif %}
 
 
     <br>
     <h3>Average Prices: </h3>
+    {% if price == '0' %}
+        {% if neighbor.AveragePriceLands > neighbor1.AveragePriceLands %}
+            <h4 class="text-success">Lands: {{ neighbor1.AveragePriceLands }} SAR</h4>
+        {% else %}
+             <h4 class="text-danger">Lands: {{ neighbor1.AveragePriceLands }} SAR</h4>
+        {% endif %}
+
+        {% if neighbor.AveragePriceAprt > neighbor1.AveragePriceAprt %}
+            <h4 class="text-success">Apartments: {{ neighbor1.AveragePriceAprt }} SAR</h4>
+        {% else %}
+             <h4 class="text-danger">Apartments: {{ neighbor1.AveragePriceAprt }} SAR</h4>
+        {% endif %}
+
+        {% if neighbor.AveragePriceVilla > neighbor1.AveragePriceVilla %}
+            <h4 class="text-success">Villas : {{ neighbor1.AveragePriceVilla}} SAR</h4>
+        {% else %}
+             <h4 class="text-danger">Villas : {{ neighbor1.AveragePriceVilla}} SAR</h4>
+        {% endif %}
+
+    {% else %}
         {% if neighbor.AveragePriceLands < neighbor1.AveragePriceLands %}
             <h4 class="text-success">Lands: {{ neighbor1.AveragePriceLands }} SAR</h4>
         {% else %}
@@ -155,6 +209,7 @@
         {% else %}
              <h4 class="text-danger">Villas : {{ neighbor1.AveragePriceVilla}} SAR</h4>
         {% endif %}
+    {% endif %}
 
     <br>
     <h3>Schools: </h3>
@@ -208,7 +263,7 @@
 
 
 
-
 </div>
+
 
 {% endblock %}
