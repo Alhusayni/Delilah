@@ -53,7 +53,10 @@ def neighborhooddetails(request, name):
             test = n.rating1 + n.rating2 + n.rating3 + n.rating4 + test
         count = UsersReview.objects.filter(neighborhoodName=obj.id).count()
         categories = 4
-        test = (test / count) / categories
+        try:
+            test = (test / count) / categories
+        except:
+            test = 0
         compform = CompareCat()
 
         args = {
@@ -85,7 +88,10 @@ def neighborhooddetails(request, name):
 
 
 def profile(request):
-    return render(request, 'profile.html')
+    user = request.user
+    reviews = UsersReview.objects.filter(user=user).order_by('-created')
+    args = {'reviews': reviews}
+    return render(request, 'profile.html', args)
 
 
 def compare(request, name, name1):
@@ -128,12 +134,34 @@ def likereview(request):
     return redirect(redir)
 
 
+def likereviewonprofile(request):
+    review = get_object_or_404(UsersReview, id=request.POST.get('reviewid'))
+    is_liked = False
+    if review.like.filter(id=request.user.id).exists():
+        review.like.remove(request.user)
+        is_liked = False
+    else:
+        review.like.add(request.user)
+        is_liked = True
+    redir = '/profile/'
+    return redirect(redir)
+
+
 def deletereview(request):
     review = get_object_or_404(UsersReview, id=request.POST.get('revid'))
     if request.user != review.user:
         return render(request, 'error.html')
     review.delete()
     redir = ('/neighborhood/' + str(review.neighborhoodName))
+    return redirect(redir)
+
+
+def deletereviewonprofile(request):
+    review = get_object_or_404(UsersReview, id=request.POST.get('revid'))
+    if request.user != review.user:
+        return render(request, 'error.html')
+    review.delete()
+    redir = '/profile'
     return redirect(redir)
 
 
@@ -153,8 +181,8 @@ def comparecategory(request, name, name1):
     categories = 4
     test = (test / count) / categories
     test1 = (test1 / count1) / categories
-    price= request.POST.get('Price')
-    population= request.POST.get('Population')
+    price = request.POST.get('Price')
+    population = request.POST.get('Population')
     nprice = 'High Price'
     npop = 'More Population'
     if price == '0':

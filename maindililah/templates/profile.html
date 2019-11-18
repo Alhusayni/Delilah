@@ -17,26 +17,29 @@ Home
     </div>
 
     <div class="col">
-          <h1>Reviews</h1>
+          <h1>My Reviews</h1>
             <div class="row">
-
             <div class="col">
-                <h4>I lived here for 7 years, I really like Almaseef neighborhood. it's the Best Neighborhood ever !!</h4>
+                {% for r in reviews %}
+
+                <h5>{{ r.review }}</h5>
             <br>
-            <h5>Public Transportation: 3 - Traffic 5 - Public Schools 5 - Outdoor Activities 5 </h5>
+            <h5>Public Transportation: {{ r.rating1 }}  -  Traffic {{ r.rating2 }}  -  Public Schools {{ r.rating3 }}  - Outdoor Activities {{ r.rating4 }} </h5>
                  <br>
-            <h6>Created on Oct. 21, 2019, 4:12 a.m.</h6>
+            <h6>Created on {{ r.created }}</h6>
+                <form action="{% url 'likereviewonprofile' %}" method="post"  >
+                {% csrf_token %}
+                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm"  >👍</button><p>  {{ r.total }}  like{{ total|pluralize }} </p>
+                </form>
 
-            <form action="" method="post"  >
-                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm"  >👍</button><p>  2 likes </p>
-
-              </form>
-
-                <form action="" method="post">
-
+                <form action="{% url 'deletereviewonprofile' %}" method="post">
+              {% csrf_token %}
               <button type="submit" name="revid" value="{{ r.id }}" class="btn btn-danger">Delete</button>
             </form>
+                  <h3> ___________________________________________________</h3>
+                    {% endfor %}
+            </div>
 
-    </div>
+
                 </div>
 {% endblock %}
