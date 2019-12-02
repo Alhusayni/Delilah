@@ -16,7 +16,7 @@
         <h4>Average reviews of Public Schools :{% for key,avg in averg.2.items %} {{ avg }} {% endfor %} </h4>
         <h4>Average reviews of Outdoor Activities :{% for key,avg in averg.3.items %} {{ avg }} {% endfor %} </h4>
         <h6>Based on {{ count }} users' reviews</h6>
-    <iframe src="{{ neighbor.Location }}" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+    <iframe src="{{ neighbor.Location }}" width="100%" height="30%" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
 
     <h3>Total Populations: </h3>
     <h4>Saudi Populations "Male": {{ neighbor.PopulationSaudiMale }} </h4>
@@ -66,22 +66,41 @@
 
 
 
-<br><br><br>
+<br><br><br><br><br><br><br><br>
      <div class="row">
 
-    {% if form != None %}
-        <form method="post">
-     {% csrf_token %}
-     {{ form.as_p }}
-    <button type="submit" class="btn btn-outline-primary">Post</button>
-        </form>
-    {% else %}
-    <h3 class="text-danger">Please <a href="{% url 'login' %}" > Sign in </a>or <a href="{% url 'register' %}">Create an account </a>  to review :)</h3>
-    {% endif %}
-
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+             <div class="modal-content">
+                     <div class="modal-header">
+                        <h4 class="modal-title">Post a review</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                 <div class="modal-body">
+                {% load crispy_forms_tags %}
+                {% if form != None %}
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy}}
+                    <button type="submit" class="btn btn-outline-primary">Post</button>
+                    </form>
+                {% else %}
+                    <h3 class="text-danger">Please <a href="{% url 'login' %}" > Sign in </a>or <a href="{% url 'register' %}">Create an account </a>  to review :)</h3>
+                {% endif %}
+                 </div>
+            </div>
+        </div>
+  </div>
     </div>
     <br>
-        <div class="row">
+    <h5>____________________________________</h5>
+    <h2> Reviews </h2>   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Post a Review
+        </button>
+    <h5>____________________________________</h5>
+    <br>
+
+    <div class="row">
          {% for r in reviews %}
             <div class="col">
                 <h5>{{ r.review }}</h5>
@@ -93,17 +112,19 @@
             <form action="{% url 'likereview' %}" method="post"  >
                 {% csrf_token %}
                 {% if is_liked == None %}
-                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-danger btn-sm" disabled>Only Users can like</button><p>  {{ r.total }} like{{ total|pluralize }} </p>
+                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-danger btn-sm" disabled>Only Users can like</button><p>  {{ r.total }} like{{ r.total|pluralize }} </p>
                 {% else %}
-                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm"  >👍</button><p>  {{ r.total }}  like{{ total|pluralize }} </p>
+                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm"  >👍</button><p>  {{ r.total }}  like{{ r.total|pluralize }} </p>
                 {% endif %}
               </form>
             {% if request.id == r.user.id %}
                 <form action="{% url 'deletereview' %}" method="post">
               {% csrf_token %}
-              <button type="submit" name="revid" value="{{ r.id }}" class="btn btn-danger">Delete</button>
-            </form>
-            {% endif %}
+              <button type="submit" name="revid" value="{{ r.id }}" class="btn btn-danger">Delete</button>  </form> {% endif %}            <button type="submit" name="revid" value="" class="btn btn-info">Reply</button>
+
+
+
+
 
             </div>
         </div>
@@ -115,7 +136,7 @@
         {% endfor %}
 
 
-    </div>
+
 
 
 
