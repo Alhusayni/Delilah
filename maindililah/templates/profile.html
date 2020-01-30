@@ -29,7 +29,7 @@ Home
             <h6>Created on {{ r.created }}</h6>
                 <form action="{% url 'likereviewonprofile' %}" method="post"  >
                 {% csrf_token %}
-                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm"  >👍</button><p>  {{ r.total }}  like{{ total|pluralize }} </p>
+                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm"  >👍</button><p>  {{ r.total }}  like{{ r.total|pluralize }} </p>
                 </form>
 
                 <form action="{% url 'deletereviewonprofile' %}" method="post">
