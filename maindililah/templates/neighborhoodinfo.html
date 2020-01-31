@@ -7,69 +7,121 @@
 {% block body %}
 
 
-  <div class="row">
-    <div class="col">
-        <h1>{{ neighbor.NeighborhoodName }}</h1>
-        <h2>Total average {{ totalavg }}</h2>
-        <h4>Average reviews of Public Transportation :{% for key,avg in averg.0.items %} {{ avg }} {% endfor %} </h4>
-        <h4>Average reviews of Traffic  :{% for key,avg in averg.1.items %} {{ avg }} {% endfor %} </h4>
-        <h4>Average reviews of Public Schools :{% for key,avg in averg.2.items %} {{ avg }} {% endfor %} </h4>
-        <h4>Average reviews of Outdoor Activities :{% for key,avg in averg.3.items %} {{ avg }} {% endfor %} </h4>
-        <h6>Based on {{ count }} users' reviews</h6>
-    <iframe src="{{ neighbor.Location }}" width="100%" height="30%" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+    <section class="hero-wrap hero-wrap-2 ftco-degree-bg js-fullheight" style="background-image: url('https://i.pinimg.com/originals/37/9c/cb/379ccba5a68397e5366956db60585819.png');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate pb-5 text-center">
+            <h1 class="mb-3 bread">{{ neighbor.NeighborhoodName }}</h1>
+            <h4>Total average {{ totalavg }}</h4>
+            <h5>Average reviews of Public Transportation :{% for key,avg in averg.0.items %} {{ avg }} {% endfor %} </h5>
+            <h5>Average reviews of Traffic  :{% for key,avg in averg.1.items %} {{ avg }} {% endfor %} </h5>
+            <h5>Average reviews of Public Schools :{% for key,avg in averg.2.items %} {{ avg }} {% endfor %} </h5>
+            <h5>Average reviews of Outdoor Activities :{% for key,avg in averg.3.items %} {{ avg }} {% endfor %} </h5>
+            <h6>Based on {{ count }} users' reviews</h6>
 
-    <h3>Total Populations: </h3>
-    <h4>Saudi Populations "Male": {{ neighbor.PopulationSaudiMale }} </h4>
-    <h4>Saudi Populations "Female": {{ neighbor.PopulationSaudiFemale }} </h4>
-    <h4>Non Saudi Populations "Male": {{ neighbor.PopulationNONSaudiMale }} </h4>
-    <h4>Non Saudi Populations "Female": {{ neighbor.PopulationNONSaudiFemale}} </h4>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+		<section class="ftco-section ftco-degree-bg">
+      <div class="container">
+        <div class="row">
+          <!--Here is information -->
+          <div class="col-md-8 order-md-last ftco-animate">
+            <h1>Information</h1>
+
+    <iframe id="map" src="{{ neighbor.Location }}" width="500" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+
+            <h3><b>Total Populations </b></h3>
+    <h4>Populations "Male": {{ neighbor.PopulationSaudiMale }} </h4>
+    <h4>Populations "Female": {{ neighbor.PopulationSaudiFemale }} </h4>
+
     <br>
-    <h3>Number of Schools: </h3>
+    <h3><b>Number of Schools </b> </h3>
     <h4>Public Schools: {{ neighbor.NumPublicSchools }}</h4>
     <h4>Private Schools: {{ neighbor.NumPrivateSchools }}</h4>
     <br>
-    <h3>Average Prices: </h3>
+    <h3><b>Average Prices </b> </h3>
     <h4>Lands: {{ neighbor.AveragePriceLands }} SAR</h4>
     <h4>Apartments: {{ neighbor.AveragePriceAprt }} SAR</h4>
     <h4>Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
     <br>
-    <h3>Number of Public Parks: {{ neighbor.NumParks }}</h3>
+    <h3><b>Number of Public Parks: </b> {{ neighbor.NumParks }}</h3>
     <br>
-    <h3>Public Transportation: </h3>
+    <h3><b>Public Transportation:</b> </h3>
     <h4>Bus Stations: {{ neighbor.NumBusStations }}</h4>
     <h4>Trains Stations: {{ neighbor.NumTrainStations }}</h4>
     <br>
-    <h3>Number of Hospitals: {{ neighbor.NumHospitals }}</h3>
-    </div>
-    <div class="col">
-      <h1>Compare with any other Neighborhood: </h1>
-    <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Choose a Neighborhood  </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-         {% for n in compare %}
-         <a class="dropdown-item" href="{% url 'compare' name=neighbor.NeighborhoodName name1=n.NeighborhoodName %}">{{ n.NeighborhoodName }}</a>
-         {% endfor %}
-         </div>
+    <h3><b>Number of Hospitals:</b> {{ neighbor.NumHospitals }}</h3>
 
 
 
 
 
-    </div>
+            <div class="pt-5 mt-5">
+
+              <h3 class="mb-5">Reviews</h3><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Post a Review </button>
+            <br><br>
 
 
+              <ul class="comment-list">
+                {% for r in reviews %}
+                <li class="comment">
+                  <div class="vcard bio">
+                    <img src="{{ r.user.userprofile.profile_picture.url }}" alt="Image placeholder">
+                  </div>
+                  <div class="comment-body">
+                    <h3>{{ r.user }}</h3>
+                    <div class="meta">{{ r.created }}</div>
+                    <p>{{ r.review }}</p>
+                    <p>Public Transportation: {{ r.rating1 }}  -  Traffic {{ r.rating2 }}  -  Public Schools {{ r.rating3 }}  - Outdoor Activities {{ r.rating4 }}</p>
+                    <p><a href="#" class="reply">Reply</a></p>
+                    <form action="{% url 'likereview' %}" method="post"  >
+                        {% csrf_token %}
+                        {% if is_liked == None %}
+                          <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-danger btn-sm" disabled>Only Users can like</button><p>  {{ r.total }} like{{ r.total|pluralize }} </p>
+                        {% else %}
+                        <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm" >👍</button><p>  {{ r.total }}  like{{ r.total|pluralize }} </p>
+                        {% endif %}
+                      {% if request.id == r.user.id %}
+                        <form action="{% url 'deletereview' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" name="revid" value="{{ r.id }}" class="btn btn-danger">Delete</button>  </form> {% endif %}
+                        </form>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+              <!-- END comment-list -->
 
-    </div>
-  </div>
+
+            </div>
+
+          </div> <!-- .col-md-8 -->
+          <!-- Here is the compare -->
+          <div class="col-md-3 sidebar ftco-animate">
 
 
+            <div class="sidebar-box ftco-animate">
+              <h2>Compare</h2>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Choose a Neighborhood  </button>
+                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% for n in compare %}
+                    <a class="dropdown-item" href="{% url 'compare' name=neighbor.NeighborhoodName name1=n.NeighborhoodName %}">{{ n.NeighborhoodName }}</a>
+                    {% endfor %}
+                  </div>
+              </div>
+          </div>
 
+        </div>
+      </div>
 
-<br><br><br><br><br><br><br><br>
-     <div class="row">
-
-    <div class="modal fade" id="myModal">
+     <div class="modal fade" id="myModal">
         <div class="modal-dialog">
              <div class="modal-content">
                      <div class="modal-header">
@@ -91,50 +143,8 @@
             </div>
         </div>
   </div>
-    </div>
-    <br>
-    <h5>____________________________________</h5>
-    <h2> Reviews </h2>   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-    Post a Review
-        </button>
-    <h5>____________________________________</h5>
-    <br>
 
-    <div class="row">
-         {% for r in reviews %}
-            <div class="col">
-                <h5>{{ r.review }}</h5>
-            <br>
-            <h5>Public Transportation: {{ r.rating1 }}  -  Traffic {{ r.rating2 }}  -  Public Schools {{ r.rating3 }}  - Outdoor Activities {{ r.rating4 }} </h5>
-                 <br>
-            <h6>Created By {{ r.user }}  on {{ r.created }}</h6>
-
-            <form action="{% url 'likereview' %}" method="post"  >
-                {% csrf_token %}
-                {% if is_liked == None %}
-                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-danger btn-sm" disabled>Only Users can like</button><p>  {{ r.total }} like{{ r.total|pluralize }} </p>
-                {% else %}
-                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm"  >👍</button><p>  {{ r.total }}  like{{ r.total|pluralize }} </p>
-                {% endif %}
-              </form>
-            {% if request.id == r.user.id %}
-                <form action="{% url 'deletereview' %}" method="post">
-              {% csrf_token %}
-              <button type="submit" name="revid" value="{{ r.id }}" class="btn btn-danger">Delete</button>  </form> {% endif %}            <button type="submit" name="revid" value="" class="btn btn-info">Reply</button>
-
-
-
-
-
-            </div>
-        </div>
-
-
-
-
-        __________________________________________________________
-        {% endfor %}
-
+    </section> <!-- .section -->
 
 
 

@@ -5,41 +5,112 @@ Home
 
 
 {% block body %}
-<div class="row">
-    <div class="col">
-        <h1>{{ user.username }} Profile</h1>
-        <img src="{{ user.userprofile.profile_picture.url }}" class="rounded" height="180" width="180">
-        <p>Email: {{ user.email }}</p>
-        <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
-        <p>City: {{ user.userprofile.city }}</p>
-        <p>Neighborhood: {{ user.userprofile.neighborhood }}</p>
+    <section class="hero-wrap hero-wrap-2 ftco-degree-bg js-fullheight" style="background-image: url('https://i.pinimg.com/originals/37/9c/cb/379ccba5a68397e5366956db60585819.png');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate pb-5 text-center">
+            <h1 class="mb-3 bread">My Profile</h1>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    </div>
+		<section class="ftco-section ftco-property-details">
+      <div class="container">
+      	<div class="row justify-content-center">
+      		<div class="col-md-12">
+      			<div class="property-details">
+      				<div class="text text-center">
+      					<h2>{{ user.username }}</h2>
+      				</div>
+      			</div>
+      		</div>
+      	</div>
+      	<div class="row">
+      		<div class="col-md-12 pills">
+						<div class="bd-example bd-example-tabs">
+							<div class="d-flex justify-content-center">
+							  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
-    <div class="col">
-          <h1>My Reviews</h1>
-            <div class="row">
-            <div class="col">
-                {% for r in reviews %}
+							    <li class="nav-item">
+							      <a class="nav-link active" id="pills-description-tab" data-toggle="pill" href="#pills-description" role="tab" aria-controls="pills-description" aria-expanded="true">Information</a>
+							    </li>
+							    <li class="nav-item">
+							      <a class="nav-link" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab" aria-controls="pills-review" aria-expanded="true">My Reviews</a>
+							    </li>
+							  </ul>
+							</div>
 
-                <h5>{{ r.review }}</h5>
-            <br>
-            <h5>Public Transportation: {{ r.rating1 }}  -  Traffic {{ r.rating2 }}  -  Public Schools {{ r.rating3 }}  - Outdoor Activities {{ r.rating4 }} </h5>
-                 <br>
-            <h6>Created on {{ r.created }}</h6>
-                <form action="{% url 'likereviewonprofile' %}" method="post"  >
-                {% csrf_token %}
-                <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm"  >👍</button><p>  {{ r.total }}  like{{ r.total|pluralize }} </p>
-                </form>
+						  <div class="tab-content" id="pills-tabContent">
+						    <div class="tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab">
+						    	<div class="row">
+						    		<div class="col-md-4">
+						    			<ul class="features">
+						    				<li class="check"><img src="{{ user.userprofile.profile_picture.url }}" class="rounded" height="180" width="180"> </li>
 
-                <form action="{% url 'deletereviewonprofile' %}" method="post">
-              {% csrf_token %}
-              <button type="submit" name="revid" value="{{ r.id }}" class="btn btn-danger">Delete</button>
-            </form>
-                  <h3> ___________________________________________________</h3>
-                    {% endfor %}
-            </div>
+						    			</ul>
+						    		</div>
+						    		<div class="col-md-8">
+						    			<ul class="features">
+						    				<li class="check"><span class="ion-ios-person"></span>Name: {{ user.first_name }} {{ user.last_name }}</li>
+						    				<li class="check"><span class="ion-ios-mail"></span>Email: {{ user.email }}</li>
+						    				<li class="check"><span class="ion-ios-business"></span>City: {{ user.userprofile.city }}</li>
+						    				<li class="check"><span class="ion-ios-home"></span>Neighborhood: {{ user.userprofile.neighborhood }}</li>
+						    				<li class="check"><span class="ion-ios-build"></span>Preferences: </li>
+						    			</ul>
+						    		</div>
+						    	</div>
+						    </div>
 
 
-                </div>
+						    <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
+						      <div class="row">
+							   		<div class="col-md-12">
+							   			<h3 class="head">My Reviews</h3>
+										{% for r in reviews %}
+							   			<div class="review d-flex">
+									   		<div class="user-img" style="background-image: url({{ user.userprofile.profile_picture.url }})"></div>
+									   		<div class="desc">
+									   			<h4>
+									   				<span class="text-left">{{ user.username }}</span>
+									   				<span class="text-right">{{ r.created }}</span>
+									   			</h4>
+									   			<p class="star">
+									   				<span>
+									   					<i>Public Transportation: {{ r.rating1 }}</i>
+									   					<i>Traffic: {{ r.rating2 }}</i>
+									   					<i>Public Schools: {{ r.rating3 }}</i>
+									   					<i>Outdoor Activities: {{ r.rating4 }}</i>
+								   					</span>
+                                                </p>
+
+
+									   			<h5>{{ r.review }}</h5>
+                                                <span class="text-right">
+														<i><form action="{% url 'likereviewonprofile' %}" method="post"  >
+                											{% csrf_token %}
+                											<button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm"  >👍</button><p>  {{ r.total }}  like{{ r.total|pluralize }} </p>
+														</form></i>
+														<i><form action="{% url 'deletereviewonprofile' %}" method="post">
+              												{% csrf_token %}
+              												<button type="submit" name="revid" value="{{ r.id }}" class="btn btn-danger">Delete</button>
+            												</form>
+														</i>
+
+													</span>
+									   		</div>
+									   	</div>
+										{% endfor %}
+
+							   		</div>
+
+							   	</div>
+						    </div>
+						  </div>
+						</div>
+		      </div>
+				</div>
+      </div>
+    </section>
 {% endblock %}
