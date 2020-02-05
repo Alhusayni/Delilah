@@ -2,10 +2,10 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import logout
 from django.db.models import Avg
 from maindililah import models
-from maindililah.forms import RegistrationForm, ReviewForm, CompareCat
+from maindililah.forms import RegistrationForm, ReviewForm, CompareCat, ReplyForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-from maindililah.models import UserProfile, Neighborhood, UsersReview
+from maindililah.models import UserProfile, Neighborhood, UsersReview, ReplyReview
 
 
 # Create your views here.
@@ -40,6 +40,7 @@ def neighborhooddetails(request, name):
         obj = Neighborhood.objects.get(NeighborhoodName=name)
         obj1 = Neighborhood.objects.exclude(NeighborhoodName=name)
         rev = UsersReview.objects.filter(neighborhoodName=obj.id).order_by('-created')
+        reply = ReplyReview.objects.all()
         if request.user.is_authenticated:
             form = ReviewForm()
             is_liked = False
@@ -69,7 +70,8 @@ def neighborhooddetails(request, name):
             'count': count,
             'is_liked': is_liked,
             'request': request.user,
-            'compform': compform
+            'compform': compform,
+            'reply': reply
         }
         return render(request, 'neighborhoodinfo.html', args)
     form = ReviewForm(request.POST or None)
@@ -202,3 +204,38 @@ def comparecategory(request, name, name1):
 
     }
     return render(request, 'catcompare.html', args)
+
+
+def reviewDetails(request, id):
+    currentuser = request.user
+    review = get_object_or_404(UsersReview, id=id)
+    reply = ReplyReview.objects.filter(userreview=review).order_by('-created')
+
+    if request.method == 'POST':
+        reply_form = ReplyForm(request.POST or None)
+        if reply_form.is_valid():
+            replytext = request.POST.get('reply')
+            rply = ReplyReview.objects.create(user=request.user, userreview=review, replytext=replytext)
+            rply.save()
+            redir = ('/review/' + str(id))
+            return redirect(redir)
+    else:
+        reply_form = ReplyForm()
+    args = {
+        'review': review,
+        'reply': reply,
+        'reply_form': reply_form,
+        'currentuser': currentuser,
+
+    }
+    return render(request, 'details.html', args)
+
+
+def deleteReply(request):
+    reply = get_object_or_404(ReplyReview, id=request.POST.get('repid'))
+    if request.user != reply.user:
+        return render(request, 'error.html')
+    nieg = reply.userreview.neighborhoodName
+    reply.delete()
+    redir = ('/neighborhood/' + str(nieg))
+    return redirect(redir)

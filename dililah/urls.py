@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
-from maindililah.views import index, mylogout, register,neighborhooddetails, profile, compare, likereview,deletereview,comparecategory,deletereviewonprofile,likereviewonprofile
+from maindililah.views import index, mylogout, register,neighborhooddetails, profile, compare, likereview,deletereview,comparecategory,deletereviewonprofile,likereviewonprofile,reviewDetails,deleteReply
 from django.contrib.auth import views as authview
 from django.conf import settings
 from django.conf.urls.static import static
@@ -36,6 +36,8 @@ urlpatterns = [
     path('delete/', deletereview, name='deletereview'),
     path('deleteonprofile/', deletereviewonprofile, name='deletereviewonprofile'),
     path('comparecategory/<str:name>/<str:name1>', comparecategory, name='comparecategory'),
+    path('review/<int:id>/', reviewDetails, name='reviewDetails'),
+    path('deletereply/', deleteReply, name='deleteReply'),
 
 ]
 

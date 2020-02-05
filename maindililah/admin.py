@@ -6,3 +6,4 @@ from maindililah import models
 admin.site.register(models.UserProfile)
 admin.site.register(models.Neighborhood)
 admin.site.register(models.UsersReview)
+admin.site.register(models.ReplyReview)

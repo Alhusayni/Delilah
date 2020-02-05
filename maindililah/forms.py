@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from maindililah.models import UsersReview
+from maindililah.models import UsersReview, ReplyReview
 
 
 class RegistrationForm(UserCreationForm):
@@ -42,5 +42,9 @@ class ReviewForm(forms.Form):
 class CompareCat(forms.Form):
     CPrice = (('0', 'Low Price'), ('1', 'High Price'))
     CPopulation = (('0', 'Fewer People'), ('1', 'More People'))
-    Price= forms.ChoiceField(choices=CPrice)
+    Price = forms.ChoiceField(choices=CPrice)
     Population = forms.ChoiceField(choices=CPopulation)
+
+
+class ReplyForm(forms.Form):
+    reply = forms.CharField(widget=forms.Textarea)

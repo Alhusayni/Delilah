@@ -4,7 +4,6 @@ from django.db.models.signals import post_save
 from django.core.validators import URLValidator
 
 
-
 # Create your models here.
 
 class UserProfile(models.Model):
@@ -19,7 +18,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     city = models.CharField(max_length=100, choices=CityChoices, default='')
     neighborhood = models.CharField(max_length=100, choices=NeighborhoodChoices, default='')
-    profile_picture = models.ImageField(upload_to='profile_image',default='default.png', blank=True)
+    profile_picture = models.ImageField(upload_to='profile_image', default='default.png', blank=True)
 
     def __str__(self):
         return str(self.user)
@@ -62,13 +61,25 @@ class UsersReview(models.Model):
     rating2 = models.IntegerField(choices=list(zip(range(1, 6), range(1, 6))), blank=False)
     rating3 = models.IntegerField(choices=list(zip(range(1, 6), range(1, 6))), blank=False)
     rating4 = models.IntegerField(choices=list(zip(range(1, 6), range(1, 6))), blank=False)
-    created = models.DateTimeField(auto_now_add=True,null=True, blank=True)
-    like = models.ManyToManyField(User, related_name= 'likes', blank=True)
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    like = models.ManyToManyField(User, related_name='likes', blank=True)
+
     def __str__(self):
-        return str(self.user)
+        return str(self.review)
 
     def total(self):
         return self.like.count()
 
+    def totalReplies(self):
+        return self.replyreview_set.count()
 
+
+class ReplyReview(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    userreview = models.ForeignKey(UsersReview, on_delete=models.CASCADE)
+    replytext = models.TextField(max_length=280, blank=False)
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return '{} - {}'.format(self.userreview.review, str(self.user.username))
 
