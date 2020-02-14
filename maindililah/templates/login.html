@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'basewhite.html' %}
 {% block head %}
 Login
 {% endblock %}
@@ -15,11 +15,16 @@ Login
           </div>
         </div>
       </div>
+        <div class="mouse">
+                <a href="#" class="mouse-icon">
+					<div class="mouse-wheel"><span class="ion-ios-arrow-round-down"></span></div>
+				</a>
+			</div>
     </section>
           <div class="container">
           <br>
 
-<h1>Login: </h1>
+<h1 class="goto-here">Login: </h1>
    <form method="post">
         {% csrf_token %}
         {{ form|crispy }}

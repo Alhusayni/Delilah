@@ -18,7 +18,7 @@ Review Details
 							   			<div class="rating-wdrap">
 								   			<div class="wrap">
 												<h1 class="mb-3 bread">{{ review.review }}</h1>
-                                                <p>From {{ review.user }} Created on {{ review.created }}</p>
+                                                <p>From<a href="{% url 'usersProfile' pk=review.user.id %}" > {{ review.user }} </a>Created on {{ review.created }}</p>
                                                 <button type="button" class="btn btn-black" data-toggle="modal" data-target="#myModal">Post a Reply </button>
 
 									   		</div>
@@ -47,7 +47,7 @@ Review Details
                     <img src="{{ r.user.userprofile.profile_picture.url }}" alt="Image placeholder">
                   </div>
                   <div class="comment-body">
-                    <h2>{{ r.user }}</h2>
+                    <a href="{% url 'usersProfile' pk=r.user.id %}" ><h2 class="testt">{{ r.user }}</h2></a>
                     <div class="meta">{{ r.created }}</div>
                     <h3>{{ r.replytext }}</h3>
                       {% if currentuser.id == r.user.id %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
 from maindililah import models
 from maindililah.forms import RegistrationForm, ReviewForm, CompareCat, ReplyForm
@@ -149,6 +150,20 @@ def likereviewonprofile(request):
     return redirect(redir)
 
 
+def likeOtherProfile(request):
+    review = get_object_or_404(UsersReview, id=request.POST.get('reviewid'))
+    is_liked = False
+    userId = review.user.id
+    if review.like.filter(id=request.user.id).exists():
+        review.like.remove(request.user)
+        is_liked = False
+    else:
+        review.like.add(request.user)
+        is_liked = True
+    redir = ('/profile/' + str(userId))
+    return redirect(redir)
+
+
 def deletereview(request):
     review = get_object_or_404(UsersReview, id=request.POST.get('revid'))
     if request.user != review.user:
@@ -239,3 +254,16 @@ def deleteReply(request):
     reply.delete()
     redir = ('/neighborhood/' + str(nieg))
     return redirect(redir)
+
+@login_required(login_url='/login/')
+def usersProfile(request, pk):
+    if pk == request.user.id:
+        return profile(request)
+    flag = 1
+    user = User.objects.get(pk=pk)
+    reviews = UsersReview.objects.filter(user=user).order_by('-created')
+    args = {'reviews': reviews,
+                'user': user,
+                'flag': flag,
+                }
+    return render(request, 'Userprofile.html', args)

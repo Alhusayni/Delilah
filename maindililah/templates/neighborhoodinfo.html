@@ -24,6 +24,11 @@
           </div>
         </div>
       </div>
+    <div class="mouse">
+				<a href="#" class="mouse-icon">
+					<div class="mouse-wheel"><span class="ion-ios-arrow-round-down"></span></div>
+				</a>
+			</div>
     </section>
 
 		<section class="ftco-section ftco-degree-bg">
@@ -31,31 +36,65 @@
         <div class="row">
           <!--Here is information -->
           <div class="col-md-8 order-md-last ftco-animate">
-            <h1>Information</h1>
+            <h1 class="goto-here">Information</h1>
 
     <iframe id="map" src="{{ neighbor.Location }}" width="500" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
 
-            <h3><b>Total Populations </b></h3>
-    <h4>Populations "Male": {{ neighbor.PopulationSaudiMale }} </h4>
-    <h4>Populations "Female": {{ neighbor.PopulationSaudiFemale }} </h4>
+    <div class="row d-flex">
+          <div class="col-md-6 d-flex ftco-animate">
+          	<div class="blog-entry justify-content-end">
+              <div class="text">
+                <h3 class="ion-ios-people"><b>Total Populations</b></h3>
+                <h4> Populations "Male": {{ neighbor.PopulationSaudiMale }} </h4>
+                <h4> Populations "Female": {{ neighbor.PopulationSaudiFemale }} </h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex ftco-animate">
+          	<div class="blog-entry justify-content-end">
+              <div class="text">
+                <h3 class="ion-ios-school"><b> Number of Schools</b></h3>
+                <h4 class>Public Schools: {{ neighbor.NumPublicSchools }}</h4>
+                <h4>Private Schools: {{ neighbor.NumPrivateSchools }}</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex ftco-animate">
+          	<div class="blog-entry justify-content-end">
+              <div class="text">
+                <h3 class="ion-ios-cash"><b> Average Prices </b> </h3>
+                <h4>Lands: {{ neighbor.AveragePriceLands }} SAR</h4>
+                <h4>Apartments: {{ neighbor.AveragePriceAprt }} SAR</h4>
+                <h4>Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex ftco-animate">
+          	<div class="blog-entry justify-content-end">
+              <div class="text">
+                <h3 class="ion-ios-information-circle"> <b>Public Transportation:</b></h3>
+                <h4>Bus Stations: {{ neighbor.NumBusStations }}</h4>
+                <h4>Trains Stations: {{ neighbor.NumTrainStations }}</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex ftco-animate">
+          	<div class="blog-entry justify-content-end">
+              <div class="text">
+                <h3 class="ion-ios-rose"><b> Number of Public Parks: </b> {{ neighbor.NumParks }}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex ftco-animate">
+          	<div class="blog-entry justify-content-end">
+              <div class="text">
+                <h3 class="ion-ios-medical"><b> Number of Hospitals:</b> {{ neighbor.NumHospitals }}</h3>
+              </div>
+            </div>
+          </div>
 
-    <br>
-    <h3><b>Number of Schools </b> </h3>
-    <h4>Public Schools: {{ neighbor.NumPublicSchools }}</h4>
-    <h4>Private Schools: {{ neighbor.NumPrivateSchools }}</h4>
-    <br>
-    <h3><b>Average Prices </b> </h3>
-    <h4>Lands: {{ neighbor.AveragePriceLands }} SAR</h4>
-    <h4>Apartments: {{ neighbor.AveragePriceAprt }} SAR</h4>
-    <h4>Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
-    <br>
-    <h3><b>Number of Public Parks: </b> {{ neighbor.NumParks }}</h3>
-    <br>
-    <h3><b>Public Transportation:</b> </h3>
-    <h4>Bus Stations: {{ neighbor.NumBusStations }}</h4>
-    <h4>Trains Stations: {{ neighbor.NumTrainStations }}</h4>
-    <br>
-    <h3><b>Number of Hospitals:</b> {{ neighbor.NumHospitals }}</h3>
+
+      </div>
 
 
 
@@ -76,7 +115,7 @@
                     <img src="{{ r.user.userprofile.profile_picture.url }}" alt="Image placeholder">
                   </div>
                   <div class="comment-body">
-                    <h3>{{ r.user }}</h3>
+                    <a href="{% url 'usersProfile' pk=r.user.id %}"><h3 class="testt">{{ r.user }}</h3></a>
                     <div class="meta">{{ r.created }}</div>
                     <p>{{ r.review }}</p>
                     <hr>
@@ -85,9 +124,9 @@
                     <form action="{% url 'likereview' %}" method="post">
                         {% csrf_token %}
                         {% if is_liked == None %}
-                          <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-danger btn-sm" disabled>Only Users can like</button><p>  {{ r.total }} like{{ r.total|pluralize }} </p>
+                          <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-danger btn-sm" disabled>Only Users can like</button><p>  {{ r.total }} Like{{ r.total|pluralize }} </p>
                         {% else %}
-                        <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-outline-primary btn-sm" >👍</button><p>{{ r.total }} like{{ r.total|pluralize }} </p>
+                        <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-outline-primary btn-sm" >👍</button><p>{{ r.total }} Like{{ r.total|pluralize }} </p>
                         {% endif %}
                     </form>
 
@@ -102,6 +141,8 @@
 
 
                   </div>
+                  <button type="button" class="btn btn-light btn-sm" data-toggle="collapse" data-target="#demo">More replies</button>
+                  <div id="demo" class="collapse">
                   {% for s in reply %}
                     {% if s.userreview.id == r.id %}
 
@@ -111,7 +152,7 @@
                                             <img src="{{ s.user.userprofile.profile_picture.url }}" alt="Image placeholder">
                                         </div>
                                         <div class="comment-body">
-                                            <h3>{{ s.user.username }}</h3>
+                                            <a href="{% url 'usersProfile' pk=s.user.id %}"><h3 class="testt">{{ s.user.username }}</h3></a>
                                             <div class="meta">{{ s.created }}</div>
                                             <p>{{ s.replytext }}</p>
                                             {% if request.id == s.user.id %}
@@ -128,6 +169,7 @@
 
                     {% endif %}
                   {% endfor %}
+                  </div>
                 </li>
                     <p><a href="{% url 'reviewDetails' id=r.id %}" class="reply">{{ r.totalReplies }} More Replies</a></p>
                 {% endfor %}

@@ -10,11 +10,11 @@ Profile
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
           <div class="col-md-9 ftco-animate pb-5 text-center">
-            <h1 class="mb-3 bread">My Profile</h1>
+            <h1 class="mb-3 bread">{{ user.username }}'s Profile</h1>
           </div>
         </div>
       </div>
-    <div class="mouse">
+        <div class="mouse">
                 <a href="#" class="mouse-icon">
 					<div class="mouse-wheel"><span class="ion-ios-arrow-round-down"></span></div>
 				</a>
@@ -42,7 +42,7 @@ Profile
 							      <a class="nav-link active" id="pills-description-tab" data-toggle="pill" href="#pills-description" role="tab" aria-controls="pills-description" aria-expanded="true">Information</a>
 							    </li>
 							    <li class="nav-item">
-							      <a class="nav-link" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab" aria-controls="pills-review" aria-expanded="true">My Reviews</a>
+							      <a class="nav-link" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab" aria-controls="pills-review" aria-expanded="true">Reviews</a>
 							    </li>
 							  </ul>
 							</div>
@@ -72,7 +72,7 @@ Profile
 						    <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
 						      <div class="row">
 							   		<div class="col-md-12">
-							   			<h3 class="head">My Reviews</h3>
+							   			<h3 class="head">Reviews</h3>
 										{% for r in reviews %}
 							   			<div class="review d-flex">
 									   		<div class="user-img" style="background-image: url({{ user.userprofile.profile_picture.url }})"></div>
@@ -93,15 +93,11 @@ Profile
 
 									   			<h5>{{ r.review }}</h5>
                                                 <span class="text-right">
-														<i><form action="{% url 'likereviewonprofile' %}" method="post"  >
+														<i><form action="{% url 'likeOtherProfile' %}" method="post"  >
                 											{% csrf_token %}
                 											<button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm"  >👍</button><p>  {{ r.total }}  like{{ r.total|pluralize }} </p>
 														</form></i>
-														<i><form action="{% url 'deletereviewonprofile' %}" method="post">
-              												{% csrf_token %}
-              												<button type="submit" name="revid" value="{{ r.id }}" class="btn btn-danger">Delete</button>
-            												</form>
-														</i>
+
 
 													</span>
 									   		</div>
