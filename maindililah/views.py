@@ -3,10 +3,11 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
 from maindililah import models
-from maindililah.forms import RegistrationForm, ReviewForm, CompareCat, ReplyForm
+from maindililah.forms import RegistrationForm, ReviewForm, CompareCat, ReplyForm, EditProfile, EditUser
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from maindililah.models import UserProfile, Neighborhood, UsersReview, ReplyReview
+from django.contrib import messages
 
 
 # Create your views here.
@@ -71,8 +72,7 @@ def neighborhooddetails(request, name):
             'count': count,
             'is_liked': is_liked,
             'request': request.user,
-            'compform': compform,
-            'reply': reply
+            'compform': compform
         }
         return render(request, 'neighborhoodinfo.html', args)
     form = ReviewForm(request.POST or None)
@@ -95,6 +95,27 @@ def profile(request):
     reviews = UsersReview.objects.filter(user=user).order_by('-created')
     args = {'reviews': reviews}
     return render(request, 'profile.html', args)
+
+
+def editProfile(request):
+    if request.method == 'POST':
+        userForm = EditUser(request.POST, instance=request.user)
+        prof = UserProfile.objects.get(user=request.user)
+        profileForm = EditProfile(request.POST, request.FILES, instance=prof)
+        if userForm.is_valid() and profileForm.is_valid():
+            userForm.save()
+            profileForm.save()
+            return redirect('profile')
+    else:
+        userForm = EditUser(instance=request.user)
+        prof = UserProfile.objects.get(user=request.user)
+        profileForm = EditProfile(instance=prof)
+
+    args = {
+        'userForm': userForm,
+        'profileForm': profileForm
+    }
+    return render(request, 'Editprofile.html', args)
 
 
 def compare(request, name, name1):
@@ -220,6 +241,46 @@ def comparecategory(request, name, name1):
     }
     return render(request, 'catcompare.html', args)
 
+@login_required(login_url='/login/')
+def comparepref(request, name, name1):
+    obj = Neighborhood.objects.get(NeighborhoodName=name)
+    obj1 = Neighborhood.objects.get(NeighborhoodName=name1)
+    rev = UsersReview.objects.filter(neighborhoodName=obj.id)
+    rev1 = UsersReview.objects.filter(neighborhoodName=obj1.id)
+    user = UserProfile.objects.get(user=request.user)
+    test = 0
+    test1 = 0
+    for n in rev:
+        test = n.rating1 + n.rating2 + n.rating3 + n.rating4 + test
+    for s in rev1:
+        test1 = s.rating1 + s.rating2 + s.rating3 + s.rating4 + test1
+    count = UsersReview.objects.filter(neighborhoodName=obj.id).count()
+    count1 = UsersReview.objects.filter(neighborhoodName=obj1.id).count()
+    categories = 4
+    test = (test / count) / categories
+    test1 = (test1 / count1) / categories
+    nprice = user.preferences_price
+    npop = user.preferences_pop
+    price = '0'
+    population = '0'
+
+    if nprice == 'High Price':
+        price = '1'
+    if npop == 'More People':
+        population = '1'
+    args = {
+        'neighbor': obj,
+        'neighbor1': obj1,
+        'totalavg': test,
+        'totalavg1': test1,
+        'population': population,
+        'price': price,
+        'nprice': nprice,
+        'npop': npop
+
+    }
+    return render(request, 'comparepref.html', args)
+
 
 def reviewDetails(request, id):
     currentuser = request.user
@@ -255,6 +316,7 @@ def deleteReply(request):
     redir = ('/neighborhood/' + str(nieg))
     return redirect(redir)
 
+
 @login_required(login_url='/login/')
 def usersProfile(request, pk):
     if pk == request.user.id:
@@ -263,7 +325,7 @@ def usersProfile(request, pk):
     user = User.objects.get(pk=pk)
     reviews = UsersReview.objects.filter(user=user).order_by('-created')
     args = {'reviews': reviews,
-                'user': user,
-                'flag': flag,
-                }
+            'user': user,
+            'flag': flag,
+            }
     return render(request, 'Userprofile.html', args)

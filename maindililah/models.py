@@ -15,10 +15,20 @@ class UserProfile(models.Model):
     CityChoices = (
         ('Riyadh', 'Riyadh'),
     )
+    PeopleChoices = (
+        ('Fewer People', 'Fewer People'),
+        ('More People', 'More People'),
+    )
+    PriceChoices = (
+        ('Low Price', 'Low Price'),
+        ('High Price', 'High Price'),
+    )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     city = models.CharField(max_length=100, choices=CityChoices, default='')
     neighborhood = models.CharField(max_length=100, choices=NeighborhoodChoices, default='')
     profile_picture = models.ImageField(upload_to='profile_image', default='default.png', blank=True)
+    preferences_price = models.CharField(max_length=100, choices=PriceChoices,default='Low Price')
+    preferences_pop = models.CharField(max_length=100, choices=PeopleChoices, default='Fewer People')
 
     def __str__(self):
         return str(self.user)

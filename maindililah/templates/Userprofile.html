@@ -92,6 +92,7 @@ Profile
 
 
 									   			<h5>{{ r.review }}</h5>
+                                                <a href="{% url 'neighborhoodinfo' name=r.neighborhoodName %}">{{ r.neighborhoodName }}</a>
                                                 <span class="text-right">
 														<i><form action="{% url 'likeOtherProfile' %}" method="post"  >
                 											{% csrf_token %}

@@ -30,6 +30,9 @@ Login
         {{ form|crispy }}
    <button type="submit" class="btn btn-outline-primary">Login!</button>
    </form>
+          <small>
+              <a href="{% url 'password_reset' %}">Forget Password?</a>
+          </small>
 
           </div>
 {% endblock %}

@@ -48,7 +48,7 @@
         {% endif %}
 
 
-    <h3>Total Populations: </h3>
+    <h3 class="ion-ios-people"> Total Populations: </h3>
         {% if neighbor.PopulationSaudiMale > neighbor1.PopulationSaudiMale %}
         <h4 class="text-success">Populations "Male": {{ neighbor.PopulationSaudiMale }} </h4>
             {% else %}
@@ -63,7 +63,7 @@
 
 
     <br>
-    <h3>Average Prices: </h3>
+    <h3 class="ion-ios-cash" > Average Prices: </h3>
         {% if neighbor.AveragePriceLands > neighbor1.AveragePriceLands %}
             <h4 class="text-success">Lands: {{ neighbor.AveragePriceLands }} SAR</h4>
         {% else %}
@@ -83,7 +83,7 @@
         {% endif %}
 
     <br>
-    <h3>Schools: </h3>
+    <h3 class="ion-ios-school" > Schools: </h3>
         {% if neighbor.NumPublicSchools > neighbor1.NumPublicSchools %}
             <h4 class="text-success">Public Schools: {{ neighbor.NumPublicSchools }}</h4>
         {% else %}
@@ -97,12 +97,12 @@
         {% endif %}
     <br>
         {% if neighbor.NumParks > neighbor1.NumParks %}
-            <h3 class="text-success">Number of Public Parks: {{ neighbor.NumParks }}</h3>
+            <h3 class="text-success ion-ios-rose" > Number of Public Parks: {{ neighbor.NumParks }}</h3>
         {% else %}
-             <h3 class="text-danger">Number of Public Parks: {{ neighbor.NumParks }}</h3>
+             <h3 class="text-danger ion-ios-rose"> Number of Public Parks: {{ neighbor.NumParks }}</h3>
         {% endif %}
     <br>
-    <h3>Public Transportation: </h3>
+    <h3 class="ion-ios-information-circle" > Public Transportation: </h3>
         {% if neighbor.NumBusStations > neighbor1.NumBusStations %}
             <h4 class="text-success">Bus Stations: {{ neighbor.NumBusStations }}</h4>
         {% else %}
@@ -117,9 +117,9 @@
 
     <br>
         {% if neighbor.NumHospitals > neighbor1.NumHospitals %}
-            <h3 class="text-success">Number of Hospitals: {{ neighbor.NumHospitals }}</h3>
+            <h3 class="text-success ion-ios-medical"> Number of Hospitals: {{ neighbor.NumHospitals }}</h3>
         {% else %}
-             <h3 class="text-danger">Number of Hospitals: {{ neighbor.NumHospitals }}</h3>
+             <h3 class="text-danger ion-ios-medical"> Number of Hospitals: {{ neighbor.NumHospitals }}</h3>
         {% endif %}
 
     </div>
@@ -133,7 +133,7 @@
         {% endif %}
 
 
-    <h3>Total Populations: </h3>
+    <h3 class="ion-ios-people"> Total Populations: </h3>
         {% if neighbor.PopulationSaudiMale < neighbor1.PopulationSaudiMale %}
         <h4 class="text-success">Populations "Male": {{ neighbor1.PopulationSaudiMale }} </h4>
             {% else %}
@@ -148,7 +148,7 @@
 
 
     <br>
-    <h3>Average Prices: </h3>
+    <h3 class="ion-ios-cash" > Average Prices: </h3>
         {% if neighbor.AveragePriceLands < neighbor1.AveragePriceLands %}
             <h4 class="text-success">Lands: {{ neighbor1.AveragePriceLands }} SAR</h4>
         {% else %}
@@ -168,7 +168,7 @@
         {% endif %}
 
     <br>
-    <h3>Schools: </h3>
+    <h3 class="ion-ios-school" > Schools: </h3>
         {% if neighbor.NumPublicSchools < neighbor1.NumPublicSchools %}
             <h4 class="text-success">Public Schools: {{ neighbor1.NumPublicSchools }}</h4>
         {% else %}
@@ -182,12 +182,12 @@
         {% endif %}
     <br>
         {% if neighbor.NumParks < neighbor1.NumParks %}
-            <h3 class="text-success">Number of Public Parks: {{ neighbor1.NumParks }}</h3>
+            <h3 class="text-success ion-ios-rose"> Number of Public Parks: {{ neighbor1.NumParks }}</h3>
         {% else %}
-             <h3 class="text-danger">Number of Public Parks: {{ neighbor1.NumParks }}</h3>
+             <h3 class="text-danger ion-ios-rose"> Number of Public Parks: {{ neighbor1.NumParks }}</h3>
         {% endif %}
     <br>
-    <h3>Public Transportation: </h3>
+    <h3 class="ion-ios-information-circle" >Public Transportation: </h3>
         {% if neighbor.NumBusStations < neighbor1.NumBusStations %}
             <h4 class="text-success">Bus Stations: {{ neighbor1.NumBusStations }}</h4>
         {% else %}
@@ -195,16 +195,16 @@
         {% endif %}
 
         {% if neighbor.NumTrainStations < neighbor1.NumTrainStations %}
-            <h4 class="text-success">Trains Stations: {{ neighbor1.NumTrainStations }}</h4>
+            <h4 class="text-success"> Trains Stations: {{ neighbor1.NumTrainStations }}</h4>
         {% else %}
-             <h4 class="text-danger">Trains Stations: {{ neighbor1.NumTrainStations }}</h4>
+             <h4 class="text-danger"> Trains Stations: {{ neighbor1.NumTrainStations }}</h4>
         {% endif %}
 
     <br>
         {% if neighbor.NumHospitals < neighbor1.NumHospitals %}
-            <h3 class="text-success">Number of Hospitals: {{ neighbor1.NumHospitals }}</h3>
+            <h3 class="text-success ion-ios-medical">Number of Hospitals: {{ neighbor1.NumHospitals }}</h3>
         {% else %}
-             <h3 class="text-danger">Number of Hospitals: {{ neighbor1.NumHospitals }}</h3>
+             <h3 class="text-danger ion-ios-medical">Number of Hospitals: {{ neighbor1.NumHospitals }}</h3>
         {% endif %}
 
 

@@ -62,7 +62,10 @@ Profile
 						    				<li class="check"><span class="ion-ios-mail"></span>Email: {{ user.email }}</li>
 						    				<li class="check"><span class="ion-ios-business"></span>City: {{ user.userprofile.city }}</li>
 						    				<li class="check"><span class="ion-ios-home"></span>Neighborhood: {{ user.userprofile.neighborhood }}</li>
-						    				<li class="check"><span class="ion-ios-build"></span>Preferences: </li>
+						    				<li class="check"><span class="ion-ios-build"></span>Preferences: {{ user.userprofile.preferences_price }} and {{ user.userprofile.preferences_pop }}</li>
+                                            <form action="{% url 'editProfile' %}">
+                                                <input class="btn btn-outline-info" type="submit" value="Edit Profile" />
+                                            </form>
 						    			</ul>
 						    		</div>
 						    	</div>
@@ -92,6 +95,7 @@ Profile
 
 
 									   			<h5>{{ r.review }}</h5>
+                                                <a href="{% url 'neighborhoodinfo' name=r.neighborhoodName %}">{{ r.neighborhoodName }}</a>
                                                 <span class="text-right">
 														<i><form action="{% url 'likereviewonprofile' %}" method="post"  >
                 											{% csrf_token %}

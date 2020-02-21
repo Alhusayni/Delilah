@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from maindililah.models import UsersReview, ReplyReview
+from maindililah.models import UsersReview, ReplyReview, UserProfile
 
 
 class RegistrationForm(UserCreationForm):
@@ -48,3 +48,15 @@ class CompareCat(forms.Form):
 
 class ReplyForm(forms.Form):
     reply = forms.CharField(widget=forms.Textarea)
+
+
+class EditProfile(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['city', 'neighborhood', 'preferences_pop', 'preferences_price', 'profile_picture']
+
+
+class EditUser(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']

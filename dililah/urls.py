@@ -16,8 +16,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
-from maindililah.views import index, mylogout, register,neighborhooddetails, profile, compare, likereview,deletereview,comparecategory,deletereviewonprofile,likereviewonprofile,reviewDetails,deleteReply,usersProfile,likeOtherProfile
-from django.contrib.auth import views as authview
+from maindililah.views import index, mylogout, register,neighborhooddetails, profile, compare, likereview,deletereview,comparecategory,deletereviewonprofile,likereviewonprofile,reviewDetails,deleteReply,usersProfile,likeOtherProfile,editProfile,comparepref
+from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -25,7 +25,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name= 'home'),
-    path('login/', authview.LoginView.as_view(template_name='login.html'), name="login"),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name="login"),
     path('logout/', mylogout, name='logout'),
     path('register/', register, name= 'register'),
     path('neighborhood/<str:name>/', neighborhooddetails, name= 'neighborhoodinfo'),
@@ -36,10 +36,32 @@ urlpatterns = [
     path('delete/', deletereview, name='deletereview'),
     path('deleteonprofile/', deletereviewonprofile, name='deletereviewonprofile'),
     path('comparecategory/<str:name>/<str:name1>', comparecategory, name='comparecategory'),
+    path('comparepreferences/<str:name>/<str:name1>', comparepref, name='comparepref'),
     path('review/<int:id>/', reviewDetails, name='reviewDetails'),
     path('deletereply/', deleteReply, name='deleteReply'),
     path('profile/<int:pk>/', usersProfile, name='usersProfile'),
     path('likeOtherProfile/', likeOtherProfile, name='likeOtherProfile'),
+    path('editProfile/', editProfile, name='editProfile'),
+    path('password-reset/',
+         auth_views.PasswordResetView.as_view(
+             template_name='users/password_reset_form.html'
+         ),
+         name='password_reset'),
+    path('password-reset/done/',
+         auth_views.PasswordResetDoneView.as_view(
+             template_name='users/password_reset_done.html'
+         ),
+         name='password_reset_done'),
+    path('password-reset-confirm/<uidb64>/<token>/',
+         auth_views.PasswordResetConfirmView.as_view(
+             template_name='users/password_reset_confirm.html'
+         ),
+         name='password_reset_confirm'),
+    path('password-reset-complete/',
+         auth_views.PasswordResetCompleteView.as_view(
+             template_name='users/password_reset_complete.html'
+         ),
+         name='password_reset_complete'),
 
 ]
 
