@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from maindililah.models import UsersReview, ReplyReview, UserProfile
+from maindililah.models import UsersReview, ReplyReview, UserProfile, ReportReview
 
 
 class RegistrationForm(UserCreationForm):
@@ -60,3 +60,7 @@ class EditUser(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
+
+
+class ReportForm(forms.Form):
+    report = forms.CharField(widget=forms.Textarea)

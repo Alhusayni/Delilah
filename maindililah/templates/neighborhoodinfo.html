@@ -12,7 +12,7 @@
       var data = google.visualization.arrayToDataTable([
         ["Neighborhood", "Average Rating", { role: "style" } ],
         ["{{neighbor.NeighborhoodName}}", {{totalavg}}, "blue"],
-        ["All Neighborhoods", 3, "silver"]
+        ["All Neighborhoods", {{totaltest}}, "silver"]
       ]);
 
       var view = new google.visualization.DataView(data);
@@ -51,6 +51,8 @@ $(document).ready(function(){
   });
 });
 </script>
+
+
 
 {% endblock %}
 
@@ -177,7 +179,8 @@ $(document).ready(function(){
                   <div class="comment-body">
                     <a href="{% url 'usersProfile' pk=r.user.id %}"><h3 class="testt">{{ r.user }}</h3></a>
                     <div class="meta">{{ r.created }}</div>
-                    <p>{{ r.review }}</p>
+                    <p>{{ r.review }}
+                       {% if r.user.id != request.id %} <a class="btn btn-outline-danger" style="float: right" href="{% url 'reportReview' id=r.id %}">Report</a>{% endif %}</p>
                     <hr>
                     <p class="" style="color: hotpink">Public Transportation: {{ r.rating1 }}  -  Traffic {{ r.rating2 }}  -  Public Schools {{ r.rating3 }}  - Outdoor Activities {{ r.rating4 }}</p>
                     <p><a href="{% url 'reviewDetails' id=r.id %}" class="reply">Reply</a></p>
@@ -186,14 +189,14 @@ $(document).ready(function(){
                         {% if is_liked == None %}
                           <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-danger btn-sm" disabled>Only Users can like</button><p>  {{ r.total }} Like{{ r.total|pluralize }} </p>
                         {% else %}
-                        <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-outline-primary btn-sm" >👍</button><p>{{ r.total }} Like{{ r.total|pluralize }} </p>
+                        <button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-outline-primary btn-sm" style="float: left">👍</button><p style="float: contour">  {{ r.total }} Like{{ r.total|pluralize }} </p>
                         {% endif %}
                     </form>
 
                       {% if request.id == r.user.id %}
                         <form action="{% url 'deletereview' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" name="revid" value="{{ r.id }}" class="btn btn-danger btn-sm">Delete</button>
+                        <button type="submit" name="revid" value="{{ r.id }}" class="btn btn-danger btn-sm" style="float: contour">Delete</button>
                         </form>
                       {% endif %}
 
@@ -201,15 +204,14 @@ $(document).ready(function(){
 
 
                   </div>
-                  <div id="demo" class="collapse">
 
-                  </div>
                 </li>
                     {% if r.totalReplies != 0 %}
                     <p><a href="{% url 'reviewDetails' id=r.id %}" class="reply">View {{ r.totalReplies }} Replies</a></p>
                     {% endif %}
                 {% endfor %}
               </ul>
+
               <!-- END comment-list -->
 
 
@@ -407,6 +409,7 @@ $('#dtVerticalScrollExample').DataTable({
 $('.dataTables_length').addClass('bs-select');
 });
 </script>
+
 {% endblock %}
 
 

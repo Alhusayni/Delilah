@@ -3,10 +3,10 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
 from maindililah import models
-from maindililah.forms import RegistrationForm, ReviewForm, CompareCat, ReplyForm, EditProfile, EditUser
+from maindililah.forms import RegistrationForm, ReviewForm, CompareCat, ReplyForm, EditProfile, EditUser, ReportForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-from maindililah.models import UserProfile, Neighborhood, UsersReview, ReplyReview
+from maindililah.models import UserProfile, Neighborhood, UsersReview, ReplyReview, ReportReview
 from django.contrib import messages
 
 
@@ -42,7 +42,7 @@ def neighborhooddetails(request, name):
         obj = Neighborhood.objects.get(NeighborhoodName=name)
         obj1 = Neighborhood.objects.exclude(NeighborhoodName=name)
         rev = UsersReview.objects.filter(neighborhoodName=obj.id).order_by('-created')
-        reply = ReplyReview.objects.all()
+        allrev = UsersReview.objects.exclude(neighborhoodName=obj.id)
         if request.user.is_authenticated:
             form = ReviewForm()
             is_liked = False
@@ -52,14 +52,22 @@ def neighborhooddetails(request, name):
         averg = [rev.aggregate(Avg('rating1')), rev.aggregate(Avg('rating2')), rev.aggregate(Avg('rating3')),
                  rev.aggregate(Avg('rating4')), ]
         test = 0
+        totaltest = 0
         for n in rev:
             test = n.rating1 + n.rating2 + n.rating3 + n.rating4 + test
+        for n in allrev:
+            totaltest = n.rating1 + n.rating2 + n.rating3 + n.rating4 + totaltest
         count = UsersReview.objects.filter(neighborhoodName=obj.id).count()
+        allcount = UsersReview.objects.exclude(neighborhoodName=obj.id).count()
         categories = 4
         try:
             test = (test / count) / categories
         except:
             test = 0
+        try:
+            totaltest = (totaltest / allcount) / categories
+        except:
+            totaltest = 0
         compform = CompareCat()
 
         args = {
@@ -72,7 +80,8 @@ def neighborhooddetails(request, name):
             'count': count,
             'is_liked': is_liked,
             'request': request.user,
-            'compform': compform
+            'compform': compform,
+            'totaltest': totaltest
         }
         return render(request, 'neighborhoodinfo.html', args)
     form = ReviewForm(request.POST or None)
@@ -241,6 +250,7 @@ def comparecategory(request, name, name1):
     }
     return render(request, 'catcompare.html', args)
 
+
 @login_required(login_url='/login/')
 def comparepref(request, name, name1):
     obj = Neighborhood.objects.get(NeighborhoodName=name)
@@ -329,3 +339,27 @@ def usersProfile(request, pk):
             'flag': flag,
             }
     return render(request, 'Userprofile.html', args)
+
+
+@login_required(login_url='/login/')
+def reportReview(request, id):
+    currentuser = request.user
+    review = get_object_or_404(UsersReview, id=id)
+    if request.method == 'POST':
+        report_form = ReportForm(request.POST or None)
+        if report_form.is_valid():
+            reportText = request.POST.get('report')
+            newReport = ReportReview.objects.create(user=request.user, userreview=review, reportText=reportText)
+            newReport.save()
+            redir = ('/review/' + str(id))
+            return redirect(redir)
+    else:
+        report_form = ReportForm()
+    args = {
+        'review': review,
+        'report_form': report_form,
+        'currentuser': currentuser,
+
+    }
+
+    return render(request, 'reportReview.html', args)

@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
-from maindililah.views import index, mylogout, register,neighborhooddetails, profile, compare, likereview,deletereview,comparecategory,deletereviewonprofile,likereviewonprofile,reviewDetails,deleteReply,usersProfile,likeOtherProfile,editProfile,comparepref
+from maindililah.views import index, mylogout, register,neighborhooddetails, profile, compare, likereview,deletereview,comparecategory,deletereviewonprofile,likereviewonprofile,reviewDetails,deleteReply,usersProfile,likeOtherProfile,editProfile,comparepref,reportReview
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -42,6 +42,7 @@ urlpatterns = [
     path('profile/<int:pk>/', usersProfile, name='usersProfile'),
     path('likeOtherProfile/', likeOtherProfile, name='likeOtherProfile'),
     path('editProfile/', editProfile, name='editProfile'),
+    path('reportReview/<int:id>/', reportReview, name='reportReview'),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(
              template_name='users/password_reset_form.html'

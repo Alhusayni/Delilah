@@ -91,9 +91,9 @@ Profile
                                                 </p>
 
 
-									   			<h5>{{ r.review }}</h5>
-                                                <a href="{% url 'neighborhoodinfo' name=r.neighborhoodName %}">{{ r.neighborhoodName }}</a>
-                                                <span class="text-right">
+									   			<h5>{{ r.review }} <a href="{% url 'neighborhoodinfo' name=r.neighborhoodName %}" style="float: right">{{ r.neighborhoodName }}</a></h5>
+
+                                                <span class="text-left">
 														<i><form action="{% url 'likeOtherProfile' %}" method="post"  >
                 											{% csrf_token %}
                 											<button type="submit" name="reviewid" value="{{ r.id }}" class="btn btn-primary btn-sm"  >👍</button><p>  {{ r.total }}  like{{ r.total|pluralize }} </p>

@@ -27,7 +27,7 @@ class UserProfile(models.Model):
     city = models.CharField(max_length=100, choices=CityChoices, default='')
     neighborhood = models.CharField(max_length=100, choices=NeighborhoodChoices, default='')
     profile_picture = models.ImageField(upload_to='profile_image', default='default.png', blank=True)
-    preferences_price = models.CharField(max_length=100, choices=PriceChoices,default='Low Price')
+    preferences_price = models.CharField(max_length=100, choices=PriceChoices, default='Low Price')
     preferences_pop = models.CharField(max_length=100, choices=PeopleChoices, default='Fewer People')
 
     def __str__(self):
@@ -93,3 +93,12 @@ class ReplyReview(models.Model):
     def __str__(self):
         return '{} - {}'.format(self.userreview.review, str(self.user.username))
 
+
+class ReportReview(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    userreview = models.ForeignKey(UsersReview, on_delete=models.CASCADE)
+    reportText = models.TextField(max_length=280, blank=False)
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return 'About {} - From {}'.format(self.userreview.review, str(self.user.username))
