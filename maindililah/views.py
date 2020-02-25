@@ -6,7 +6,7 @@ from maindililah import models
 from maindililah.forms import RegistrationForm, ReviewForm, CompareCat, ReplyForm, EditProfile, EditUser, ReportForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-from maindililah.models import UserProfile, Neighborhood, UsersReview, ReplyReview, ReportReview
+from maindililah.models import UserProfile, Neighborhood, UsersReview, ReplyReview, ReportReview, ReportReply
 from django.contrib import messages
 
 
@@ -62,10 +62,12 @@ def neighborhooddetails(request, name):
         categories = 4
         try:
             test = (test / count) / categories
+            test = round(test, 2)
         except:
             test = 0
         try:
             totaltest = (totaltest / allcount) / categories
+            totaltest = round(totaltest, 2)
         except:
             totaltest = 0
         compform = CompareCat()
@@ -96,7 +98,9 @@ def neighborhooddetails(request, name):
         newreview.rating4 = form.cleaned_data['Outdoor_Activities']
         newreview.save()
     args = {form: 'form'}
-    return render(request, 'posted.html', args)
+    redir = ('/neighborhood/' + name)
+    return redirect(redir)
+    #return render(request, 'posted.html', args)
 
 
 def profile(request):
@@ -363,3 +367,27 @@ def reportReview(request, id):
     }
 
     return render(request, 'reportReview.html', args)
+
+
+@login_required(login_url='/login/')
+def reportReply(request, id):
+    currentuser = request.user
+    reply = get_object_or_404(ReplyReview, id=id)
+    if request.method == 'POST':
+        report_form = ReportForm(request.POST or None)
+        if report_form.is_valid():
+            reportText = request.POST.get('report')
+            newReport = ReportReply.objects.create(user=request.user, reply=reply, reportText=reportText)
+            newReport.save()
+            redir = ('/review/' + str(reply.userreview.id))
+            return redirect(redir)
+    else:
+        report_form = ReportForm()
+    args = {
+        'reply': reply,
+        'report_form': report_form,
+        'currentuser': currentuser,
+
+    }
+
+    return render(request, 'reportReply.html', args)

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'maindililah',
     'crispy_forms',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'dililahsa@gmail.com'
 EMAIL_HOST_PASSWORD = 'Stetsondililah'
+
+RECAPTCHA_PUBLIC_KEY = '6Lc7OdwUAAAAAMjIMuicSJ2PwEpBAgBEg_5_0uHw'
+RECAPTCHA_PRIVATE_KEY = '6Lc7OdwUAAAAAJaLseh99PbUDFHUHjlFX7TJ-yQu'
+NOCAPTCHA = True

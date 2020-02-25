@@ -2,11 +2,12 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from maindililah.models import UsersReview, ReplyReview, UserProfile, ReportReview
+from captcha.fields import ReCaptchaField
 
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
-
+    captcha = ReCaptchaField()
     class Meta:
         model = User
         fields = (
@@ -37,6 +38,7 @@ class ReviewForm(forms.Form):
     Traffic = forms.ChoiceField(choices=CHOICES)
     Public_Schools = forms.ChoiceField(choices=CHOICES)
     Outdoor_Activities = forms.ChoiceField(choices=CHOICES)
+    captcha = ReCaptchaField()
 
 
 class CompareCat(forms.Form):
@@ -48,6 +50,7 @@ class CompareCat(forms.Form):
 
 class ReplyForm(forms.Form):
     reply = forms.CharField(widget=forms.Textarea)
+    captcha = ReCaptchaField()
 
 
 class EditProfile(forms.ModelForm):

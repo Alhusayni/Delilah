@@ -16,20 +16,21 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
-from maindililah.views import index, mylogout, register,neighborhooddetails, profile, compare, likereview,deletereview,comparecategory,deletereviewonprofile,likereviewonprofile,reviewDetails,deleteReply,usersProfile,likeOtherProfile,editProfile,comparepref,reportReview
+from maindililah.views import index, mylogout, register, neighborhooddetails, profile, compare, likereview, \
+    deletereview, comparecategory, deletereviewonprofile, likereviewonprofile, reviewDetails, deleteReply, usersProfile, \
+    likeOtherProfile, editProfile, comparepref, reportReview, reportReply
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name= 'home'),
+    path('', index, name='home'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name="login"),
     path('logout/', mylogout, name='logout'),
-    path('register/', register, name= 'register'),
-    path('neighborhood/<str:name>/', neighborhooddetails, name= 'neighborhoodinfo'),
-    path('profile/', profile, name= 'profile'),
+    path('register/', register, name='register'),
+    path('neighborhood/<str:name>/', neighborhooddetails, name='neighborhoodinfo'),
+    path('profile/', profile, name='profile'),
     path('compare/<str:name>/<str:name1>', compare, name='compare'),
     path('like/', likereview, name='likereview'),
     path('likeonprofile/', likereviewonprofile, name='likereviewonprofile'),
@@ -43,6 +44,7 @@ urlpatterns = [
     path('likeOtherProfile/', likeOtherProfile, name='likeOtherProfile'),
     path('editProfile/', editProfile, name='editProfile'),
     path('reportReview/<int:id>/', reportReview, name='reportReview'),
+    path('reportReply/<int:id>/', reportReply, name='reportReply'),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(
              template_name='users/password_reset_form.html'

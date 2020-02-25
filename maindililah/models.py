@@ -102,3 +102,13 @@ class ReportReview(models.Model):
 
     def __str__(self):
         return 'About {} - From {}'.format(self.userreview.review, str(self.user.username))
+
+
+class ReportReply(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reply = models.ForeignKey(ReplyReview, on_delete=models.CASCADE)
+    reportText = models.TextField(max_length=280, blank=False)
+    created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return 'About {} - From {}'.format(self.reply.replytext, str(self.user.username))

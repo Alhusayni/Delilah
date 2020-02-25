@@ -49,7 +49,9 @@ Review Details
                   <div class="comment-body">
                     <a href="{% url 'usersProfile' pk=r.user.id %}" ><h2 class="testt">{{ r.user }}</h2></a>
                     <div class="meta">{{ r.created }}</div>
-                    <h3>{{ r.replytext }}</h3>
+                    <h3>{{ r.replytext }}
+                    {% if r.user.id != request.id %} <a class="btn btn-outline-danger btn-sm" style="float: bottom" href="{% url 'reportReply' id=r.id %}">Report</a>{% endif %}
+                    </h3>
                       {% if currentuser.id == r.user.id %}
                         <form action="{% url 'deleteReply' %}" method="post">
                             {% csrf_token %}
