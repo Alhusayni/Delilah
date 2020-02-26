@@ -60,6 +60,10 @@ p:hover.testt{
                 <li class="nav-item"><a href="{% url 'login' %}" class="nav-link" style="color: white"><p class="testt">Login</p></a></li>
             <li class="nav-item"><a href="{% url 'register' %}" class="nav-link" style="color: white"><p class="testt">Register</p></a></li>
         {% endif %}
+              {% if request.user.is_superuser %}
+                  <li class="nav-item"><a href="{% url 'reportsPage' %}" class="nav-link" style="color: white"><p class="testt">Reports Page</p></a></li>
+              {% endif %}
+              </ul>
     </div>
   </div>
 </nav>

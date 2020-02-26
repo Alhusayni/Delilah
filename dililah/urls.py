@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from maindililah.views import index, mylogout, register, neighborhooddetails, profile, compare, likereview, \
     deletereview, comparecategory, deletereviewonprofile, likereviewonprofile, reviewDetails, deleteReply, usersProfile, \
-    likeOtherProfile, editProfile, comparepref, reportReview, reportReply
+    likeOtherProfile, editProfile, comparepref, reportReview, reportReply, deleteReportRep, deleteReportRev, \
+    dismissReportRep, dismissReportRev, reportsPage
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -35,6 +36,10 @@ urlpatterns = [
     path('like/', likereview, name='likereview'),
     path('likeonprofile/', likereviewonprofile, name='likereviewonprofile'),
     path('delete/', deletereview, name='deletereview'),
+    path('deleteRev/', deleteReportRev, name='deleteReportRev'),
+    path('deleteRep/', deleteReportRep, name='deleteReportRep'),
+    path('dismissRep/', dismissReportRep, name='dismissReportRep'),
+    path('dismissRev/', dismissReportRev, name='dismissReportRev'),
     path('deleteonprofile/', deletereviewonprofile, name='deletereviewonprofile'),
     path('comparecategory/<str:name>/<str:name1>', comparecategory, name='comparecategory'),
     path('comparepreferences/<str:name>/<str:name1>', comparepref, name='comparepref'),
@@ -45,6 +50,7 @@ urlpatterns = [
     path('editProfile/', editProfile, name='editProfile'),
     path('reportReview/<int:id>/', reportReview, name='reportReview'),
     path('reportReply/<int:id>/', reportReply, name='reportReply'),
+    path('reports/', reportsPage, name='reportsPage'),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(
              template_name='users/password_reset_form.html'

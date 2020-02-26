@@ -7,6 +7,7 @@ from maindililah.forms import RegistrationForm, ReviewForm, CompareCat, ReplyFor
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from maindililah.models import UserProfile, Neighborhood, UsersReview, ReplyReview, ReportReview, ReportReply
+from django.http import Http404
 from django.contrib import messages
 
 
@@ -100,7 +101,7 @@ def neighborhooddetails(request, name):
     args = {form: 'form'}
     redir = ('/neighborhood/' + name)
     return redirect(redir)
-    #return render(request, 'posted.html', args)
+    # return render(request, 'posted.html', args)
 
 
 def profile(request):
@@ -261,18 +262,38 @@ def comparepref(request, name, name1):
     obj1 = Neighborhood.objects.get(NeighborhoodName=name1)
     rev = UsersReview.objects.filter(neighborhoodName=obj.id)
     rev1 = UsersReview.objects.filter(neighborhoodName=obj1.id)
+    allrev = UsersReview.objects.exclude(neighborhoodName=obj.id)
     user = UserProfile.objects.get(user=request.user)
     test = 0
     test1 = 0
+    totalavg = 0
     for n in rev:
         test = n.rating1 + n.rating2 + n.rating3 + n.rating4 + test
     for s in rev1:
         test1 = s.rating1 + s.rating2 + s.rating3 + s.rating4 + test1
+    for n in allrev:
+        totalavg = n.rating1 + n.rating2 + n.rating3 + n.rating4 + totalavg
+    totalavg = totalavg - test1
     count = UsersReview.objects.filter(neighborhoodName=obj.id).count()
     count1 = UsersReview.objects.filter(neighborhoodName=obj1.id).count()
+    countall = UsersReview.objects.exclude(neighborhoodName=obj.id).count() - count1
     categories = 4
-    test = (test / count) / categories
-    test1 = (test1 / count1) / categories
+    try:
+        test = (test / count) / categories
+        test = round(test, 2)
+    except:
+        test = 0
+    try:
+        test1 = (test1 / count1) / categories
+        test1 = round(test1, 2)
+    except:
+        test = 0
+    try:
+        totalavg = (totalavg / countall) / categories
+        totalavg = round(totalavg, 2)
+    except:
+        totalavg = 0
+
     nprice = user.preferences_price
     npop = user.preferences_pop
     price = '0'
@@ -290,7 +311,8 @@ def comparepref(request, name, name1):
         'population': population,
         'price': price,
         'nprice': nprice,
-        'npop': npop
+        'npop': npop,
+        'totalavgall': totalavg
 
     }
     return render(request, 'comparepref.html', args)
@@ -391,3 +413,51 @@ def reportReply(request, id):
     }
 
     return render(request, 'reportReply.html', args)
+
+
+def reportsPage(request):
+    if not request.user.is_superuser:
+        raise Http404('not allowed only for superusers')
+    revReport = ReportReview.objects.all()
+    repReport = ReportReply.objects.all()
+    args = {
+        'revReport': revReport,
+        'repReport': repReport,
+    }
+    return render(request, 'reports.html', args)
+
+
+def deleteReportRev(request):
+    review = get_object_or_404(UsersReview, id=request.POST.get('revid'))
+    if not request.user.is_superuser:
+        return render(request, 'error.html')
+    review.delete()
+    redir = '/reports/'
+    return redirect(redir)
+
+
+def deleteReportRep(request):
+    reply = get_object_or_404(ReplyReview, id=request.POST.get('revid'))
+    if not request.user.is_superuser:
+        return render(request, 'error.html')
+    reply.delete()
+    redir = '/reports/'
+    return redirect(redir)
+
+
+def dismissReportRep(request):
+    report = get_object_or_404(ReportReply, id=request.POST.get('revid'))
+    if not request.user.is_superuser:
+        return render(request, 'error.html')
+    report.delete()
+    redir = '/reports/'
+    return redirect(redir)
+
+
+def dismissReportRev(request):
+    report = get_object_or_404(ReportReview, id=request.POST.get('revid'))
+    if not request.user.is_superuser:
+        return render(request, 'error.html')
+    report.delete()
+    redir = '/reports/'
+    return redirect(redir)
