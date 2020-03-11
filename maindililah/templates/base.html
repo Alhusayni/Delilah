@@ -52,17 +52,17 @@ p:hover.testt{
 	      </button>
   	      <div class="collapse navbar-collapse" id="ftco-nav">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item "><a href="{% url 'home' %}" class="nav-link"">Home</a></li>
+                <li class="nav-item "><a href="{% url 'home' %}" class="nav-link ion-ios-home"> Home</a></li>
         {% if user.is_authenticated %}
-                <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
-                <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link">Profile</a></li>
+                <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link ion-ios-exit"> Logout</a></li>
+                <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link ion-ios-person"> Profile</a></li>
 
         {% else %}
-                <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Login</a></li>
-                <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Register</a></li>
+                <li class="nav-item"><a href="{% url 'login' %}" class="nav-link ion-ios-log-in"> Login</a></li>
+                <li class="nav-item"><a href="{% url 'register' %}" class="nav-link ion-ios-unlock"> Register</a></li>
         {% endif %}
               {% if request.user.is_superuser %}
-                <li class="nav-item"><a href="{% url 'reportsPage' %}" class="nav-link">Reports Page</a></li>
+                <li class="nav-item"><a href="{% url 'reportsPage' %}" class="nav-link ion-ios-paper"> Reports Page</a></li>
               {% endif %}
               </ul>
     </div>

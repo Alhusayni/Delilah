@@ -162,7 +162,49 @@ $(document).ready(function(){
 
 
 
-            <div class="pt-5 mt-5">
+
+
+          </div> <!-- .col-md-8 -->
+          <!-- Here is the compare -->
+          <div class="col-md-3 sidebar ftco-animate">
+
+
+          <div class="sidebar-box ftco-animate">
+              <h2>Compare</h2>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal_compare">Choose a Neighborhood</button>
+
+          </div>
+          <div class="sidebar-box ftco-animate">
+           <h4>Commute Calculator</h4>
+          <div class="item">
+                <div class="testimony-wrap py-4">
+                  <div class="text">
+                      <form id="distance_form">
+                        <div class="form-group"><label>Origin: </label>
+                        <input class="form-control" id="from_places" placeholder="{{ neighbor.NeighborhoodName }}" readonly />
+                        <input id="origin" name="origin" required="" type="hidden" value="{{ neighbor.NeighborhoodName }}" ></div>
+
+                        <div class="form-group"><label>Destination: </label> <input class="form-control" id="to_places" placeholder="Enter a location" /> <input id="destination" name="destination" required="" type="hidden" /></div>
+                          <input class="btn btn-primary btn-sm" type="submit" value="Calculate" /></form>
+                    <div class="d-flex align-items-center">
+                    	<div class="pl-3">
+                            <p class="name" id="commute_text"><p id="duration_text" style="color: green"></p></p>
+                            <p class="name" id="distance_text"><p id="in_mile" style="color: green"></p> </p>
+
+		                  </div>
+	                  </div>
+                  </div>
+                </div>
+          </div> </div>
+
+
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="col-md-12 order-md-last ftco-animate">
+
+               <div class="pt-5 mt-5">
 
               <h3 class="mb-2">{{ count }} Review{{ reviews|pluralize }}</h3><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Post a Review </button>
 
@@ -217,41 +259,10 @@ $(document).ready(function(){
 
             </div>
 
-          </div> <!-- .col-md-8 -->
-          <!-- Here is the compare -->
-          <div class="col-md-3 sidebar ftco-animate">
-
-
-          <div class="sidebar-box ftco-animate">
-              <h2>Compare</h2>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal_compare">Choose a Neighborhood</button>
 
           </div>
-          <div class="sidebar-box ftco-animate">
-           <h4>Commute Calculator</h4>
-          <div class="item">
-                <div class="testimony-wrap py-4">
-                  <div class="text">
-                      <form id="distance_form">
-                        <div class="form-group"><label>Origin: </label>
-                        <input class="form-control" id="from_places" placeholder="{{ neighbor.NeighborhoodName }}" readonly />
-                        <input id="origin" name="origin" required="" type="hidden" value="{{ neighbor.NeighborhoodName }}" ></div>
-
-                        <div class="form-group"><label>Destination: </label> <input class="form-control" id="to_places" placeholder="Enter a location" /> <input id="destination" name="destination" required="" type="hidden" /></div>
-                          <input class="btn btn-primary btn-sm" type="submit" value="Calculate" /></form>
-                    <div class="d-flex align-items-center">
-                    	<div class="pl-3">
-                            <p class="name" id="commute_text"><p id="duration_text" style="color: green"></p></p>
-                            <p class="name" id="distance_text"><p id="in_mile" style="color: green"></p> </p>
-
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-          </div> </div>
 
 
-        </div>
       </div>
 
      <div class="modal fade" id="myModal">

@@ -51,17 +51,17 @@ p:hover.testt{
 	      </button>
   	      <div class="collapse navbar-collapse" id="ftco-nav">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item "><a href="{% url 'home' %}" class="nav-link" style="color: white"><p class="testt">Home</p></a></li>
+                <li class="nav-item "><a href="{% url 'home' %}" class="nav-link" style="color: white"><p class="testt ion-ios-home"> Home</p></a></li>
         {% if user.is_authenticated %}
-                <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link" style="color: white"><p class="testt">Logout</p></a></li>
-                <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link" style="color: white"><p class="testt">Profile</p></a></li>
+                <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link" style="color: white"><p class="testt ion-ios-exit"> Logout</p></a></li>
+                <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link" style="color: white"><p class="testt ion-ios-person"> Profile</p></a></li>
 
         {% else %}
-                <li class="nav-item"><a href="{% url 'login' %}" class="nav-link" style="color: white"><p class="testt">Login</p></a></li>
-            <li class="nav-item"><a href="{% url 'register' %}" class="nav-link" style="color: white"><p class="testt">Register</p></a></li>
+                <li class="nav-item"><a href="{% url 'login' %}" class="nav-link" style="color: white"><p class="testt ion-ios-log-in"> Login</p></a></li>
+            <li class="nav-item"><a href="{% url 'register' %}" class="nav-link" style="color: white"><p class="testt ion-ios-unlock"> Register</p></a></li>
         {% endif %}
               {% if request.user.is_superuser %}
-                  <li class="nav-item"><a href="{% url 'reportsPage' %}" class="nav-link" style="color: white"><p class="testt">Reports Page</p></a></li>
+                  <li class="nav-item"><a href="{% url 'reportsPage' %}" class="nav-link" style="color: white"><p class="testt ion-ios-paper"> Reports Page</p></a></li>
               {% endif %}
               </ul>
     </div>
@@ -80,7 +80,7 @@ p:hover.testt{
           <div class="col-md-12 text-center">
 
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> | Background Image by <a href="https://www.instagram.com/fahadabdalrahma/"> Fahad Abdulrahman</a>
   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
           </div>
         </div>
