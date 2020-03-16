@@ -3,6 +3,8 @@
 Home
 {% endblock %}
 {% block htmlhead %}
+    {% load static %}
+    <script type="text/javascript" src="{% static 'maindililah/js/sort-table.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
 $(document).ready(function(){
@@ -13,7 +15,10 @@ $(document).ready(function(){
     });
   });
 });
+
 </script>
+
+
 
 
 {% endblock %}
@@ -97,16 +102,21 @@ $(document).ready(function(){
                  <div class="modal-body">
                      <input class="form-control form-control-xs" id="myInput" type="text" placeholder="Search.." >
                      <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                        <table class="table table-bordered table-striped mb-0 table-sm">
+                        <table class="table table-bordered table-striped mb-0 table-sm js-sort-table">
                             <thead>
                                 <tr>
                                     <th scope="col">Neighborhoods</th>
+                                    <th class="js-sort-number" scope="col">Average Reviews</th>
                                 </tr>
+
+
+
                             </thead>
                         <tbody id="myTable">
                         {% for n in neighbor %}
                             <tr>
-                        <td scope="row"><a href="{% url 'neighborhoodinfo' name=n.NeighborhoodName %}" > {{ n.NeighborhoodName }}</a></td>
+                                <td scope="row"><a href="{% url 'neighborhoodinfo' name=n.NeighborhoodName %}" > {{ n.NeighborhoodName }}</a></td>
+                                <td scope="row"> {{ n.AverageReviews }}</td>
                             </tr>
                         {% endfor %}
 

@@ -58,6 +58,7 @@ class Neighborhood(models.Model):
     NumHospitals = models.IntegerField()
     NumBusStations = models.IntegerField()
     NumTrainStations = models.IntegerField()
+    AverageReviews = models.FloatField(default=0)
 
     def __str__(self):
         return self.NeighborhoodName

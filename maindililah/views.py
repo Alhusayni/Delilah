@@ -72,6 +72,8 @@ def neighborhooddetails(request, name):
         except:
             totaltest = 0
         compform = CompareCat()
+        obj.AverageReviews = test
+        obj.save()
 
         args = {
             'neighbor': obj,

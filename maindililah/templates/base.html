@@ -61,7 +61,7 @@ p:hover.testt{
                 <li class="nav-item"><a href="{% url 'login' %}" class="nav-link ion-ios-log-in"> Login</a></li>
                 <li class="nav-item"><a href="{% url 'register' %}" class="nav-link ion-ios-unlock"> Register</a></li>
         {% endif %}
-              {% if request.user.is_superuser %}
+              {% if request.user.is_staff or request.is_staff %}
                 <li class="nav-item"><a href="{% url 'reportsPage' %}" class="nav-link ion-ios-paper"> Reports Page</a></li>
               {% endif %}
               </ul>

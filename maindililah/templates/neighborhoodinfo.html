@@ -66,7 +66,7 @@ $(document).ready(function(){
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
           <div class="col-md-9 ftco-animate pb-5 text-center">
             <h1 class="mb-3 bread">{{ neighbor.NeighborhoodName }}</h1>
-            <h4>Total average {{ totalavg|floatformat:"2" }}</h4>
+            <h4>Total average {{ neighbor.AverageReviews|floatformat:"2" }}</h4>
             <h5>Average reviews of Public Transportation :{% for key,avg in averg.0.items %} {{ avg|floatformat:"2" }} {% endfor %} </h5>
             <h5>Average reviews of Traffic  :{% for key,avg in averg.1.items %} {{ avg|floatformat:"2" }} {% endfor %} </h5>
             <h5>Average reviews of Public Schools :{% for key,avg in averg.2.items %} {{ avg|floatformat:"2" }} {% endfor %} </h5>
