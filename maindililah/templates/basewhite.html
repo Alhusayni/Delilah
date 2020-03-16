@@ -51,7 +51,7 @@ p:hover.testt{
 	      </button>
   	      <div class="collapse navbar-collapse" id="ftco-nav">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item "><a href="{% url 'home' %}" class="nav-link" style="color: white"><p class="testt ion-ios-home"> Home</p></a></li>
+                <li class="nav-item "><a href="{% url 'home' %}" class="nav-link" ><p class="testt ion-ios-home"> Home</p></a></li>
         {% if user.is_authenticated %}
                 <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link" style="color: white"><p class="testt ion-ios-exit"> Logout</p></a></li>
                 <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link" style="color: white"><p class="testt ion-ios-person"> Profile</p></a></li>

@@ -139,23 +139,43 @@ def compare(request, name, name1):
     obj1 = Neighborhood.objects.get(NeighborhoodName=name1)
     rev = UsersReview.objects.filter(neighborhoodName=obj.id)
     rev1 = UsersReview.objects.filter(neighborhoodName=obj1.id)
+    allrev = UsersReview.objects.exclude(neighborhoodName=obj.id)
     test = 0
     test1 = 0
+    totalavg = 0
     for n in rev:
         test = n.rating1 + n.rating2 + n.rating3 + n.rating4 + test
     for s in rev1:
         test1 = s.rating1 + s.rating2 + s.rating3 + s.rating4 + test1
+    for n in allrev:
+        totalavg = n.rating1 + n.rating2 + n.rating3 + n.rating4 + totalavg
+    totalavg = totalavg - test1
     count = UsersReview.objects.filter(neighborhoodName=obj.id).count()
     count1 = UsersReview.objects.filter(neighborhoodName=obj1.id).count()
+    countall = UsersReview.objects.exclude(neighborhoodName=obj.id).count() - count1
     categories = 4
-    test = (test / count) / categories
-    test1 = (test1 / count1) / categories
+    try:
+        test = (test / count) / categories
+        test = round(test, 2)
+    except:
+        test = 0
+    try:
+        test1 = (test1 / count1) / categories
+        test1 = round(test1, 2)
+    except:
+        test = 0
+    try:
+        totalavg = (totalavg / countall) / categories
+        totalavg = round(totalavg, 2)
+    except:
+        totalavg = 0
 
     args = {
         'neighbor': obj,
         'neighbor1': obj1,
         'totalavg': test,
-        'totalavg1': test1
+        'totalavg1': test1,
+        'totalavgall': totalavg
 
     }
     return render(request, 'compareneigh.html', args)

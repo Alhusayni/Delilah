@@ -3,6 +3,43 @@
 {{ neighbor }} VS {{ neighbor1 }}
 {% endblock %}
 
+{% block htmlhead %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Neighborhood", "Average Rating", { role: "style" } ],
+        ["{{neighbor.NeighborhoodName}}", {{totalavg}}, "blue"],
+        ["{{neighbor1.NeighborhoodName}}", {{totalavg1}}, "red"],
+        ["All Neighborhoods", {{totalavgall}}, "silver"],
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Total Average Rating",
+        bar: {groupWidth: "80%"},
+        legend: { position: "none" },
+        backgroundColor: { fill:'transparent' },
+        max: 5,
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+  }
+  $(window).resize(function (){
+      drawChart();
+
+  });
+  </script>
+{% endblock %}
 
 {% block body %}
 
@@ -36,6 +73,9 @@
     </section>
 <div class="container">
 <br><br>
+<div class="row">
+  <div id="columnchart_values" style="width: 100%; "></div>
+  </div>
 
   <div class="row">
     <div class="col">
