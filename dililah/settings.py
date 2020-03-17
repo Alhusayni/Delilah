@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'maindililah',
     'crispy_forms',
     'captcha',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

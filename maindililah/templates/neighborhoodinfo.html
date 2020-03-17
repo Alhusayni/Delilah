@@ -56,7 +56,7 @@ $(document).ready(function(){
 
 {% endblock %}
 
-
+{% load humanize %}
 {% block body %}
 
 
@@ -107,8 +107,8 @@ $(document).ready(function(){
           	<div class="blog-entry justify-content-end">
               <div class="text">
                 <h3 class="ion-ios-people"><b>Total Populations</b></h3>
-                <h4> Populations "Male": {{ neighbor.PopulationSaudiMale }} </h4>
-                <h4> Populations "Female": {{ neighbor.PopulationSaudiFemale }} </h4>
+                <h4> Populations "Male": {{ neighbor.PopulationSaudiMale|intcomma }} </h4>
+                <h4> Populations "Female": {{ neighbor.PopulationSaudiFemale|intcomma }} </h4>
               </div>
             </div>
           </div>
@@ -125,9 +125,9 @@ $(document).ready(function(){
           	<div class="blog-entry justify-content-end">
               <div class="text">
                 <h3 class="ion-ios-cash"><b> Average Prices </b> </h3>
-                <h4>Lands: {{ neighbor.AveragePriceLands }} SAR</h4>
-                <h4>Apartments: {{ neighbor.AveragePriceAprt }} SAR</h4>
-                <h4>Villas : {{ neighbor.AveragePriceVilla}} SAR</h4>
+                <h4>Lands: {{ neighbor.AveragePriceLands|intcomma }} SAR per m²</h4>
+                <h4>Apartments: {{ neighbor.AveragePriceAprt|intcomma }} SAR per m²</h4>
+                <h4>Villas : {{ neighbor.AveragePriceVilla|intcomma}} SAR</h4>
               </div>
             </div>
           </div>
