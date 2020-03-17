@@ -11,8 +11,8 @@
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
         ["Neighborhood", "Average Rating", { role: "style" } ],
-        ["{{neighbor.NeighborhoodName}}", {{totalavg}}, "blue"],
-        ["{{neighbor1.NeighborhoodName}}", {{totalavg1}}, "red"],
+        ["{{neighbor.NeighborhoodName}}", {{neighbor.AverageReviews}}, "blue"],
+        ["{{neighbor1.NeighborhoodName}}", {{neighbor1.AverageReviews}}, "red"],
         ["All Neighborhoods", {{totalavgall}}, "silver"],
       ]);
 
@@ -85,10 +85,10 @@
     <div class="col">
           <h1>{{ neighbor.NeighborhoodName }}</h1>
     <iframe id="map" src="{{ neighbor.Location }}" width="400" height="250" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
-        {% if totalavg > totalavg1 %}
-        <h2  class="text-success" >Total average {{ totalavg }}</h2>
+        {% if neighbor.AverageReviews > neighbor1.AverageReviews %}
+        <h2  class="text-success" >Total average {{ neighbor.AverageReviews }}</h2>
         {% else %}
-        <h2  class="text-danger" >Total average {{ totalavg }}</h2>
+        <h2  class="text-danger" >Total average {{ neighbor.AverageReviews }}</h2>
         {% endif %}
 
     {% if population == '0' %}
@@ -205,10 +205,10 @@
     <div class="col">
           <h1>{{ neighbor1.NeighborhoodName }}</h1>
     <iframe id="map" src="{{ neighbor1.Location }}" width="400" height="250" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
-        {% if totalavg < totalavg1 %}
-        <h2  class="text-success" >Total average {{ totalavg1 }}</h2>
+        {% if neighbor.AverageReviews < neighbor1.AverageReviews %}
+        <h2  class="text-success" >Total average {{ neighbor1.AverageReviews }}</h2>
         {% else %}
-        <h2  class="text-danger" >Total average {{ totalavg1 }}</h2>
+        <h2  class="text-danger" >Total average {{ neighbor1.AverageReviews }}</h2>
         {% endif %}
 
 

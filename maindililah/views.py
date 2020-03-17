@@ -253,8 +253,14 @@ def comparecategory(request, name, name1):
     count = UsersReview.objects.filter(neighborhoodName=obj.id).count()
     count1 = UsersReview.objects.filter(neighborhoodName=obj1.id).count()
     categories = 4
-    test = (test / count) / categories
-    test1 = (test1 / count1) / categories
+    try:
+        test = (test / count) / categories
+    except:
+        test = 0
+    try:
+        test1 = (test1 / count1) / categories
+    except:
+        test1 = 0
     price = request.POST.get('Price')
     population = request.POST.get('Population')
     nprice = 'High Price'
