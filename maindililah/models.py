@@ -10,7 +10,23 @@ class UserProfile(models.Model):
     NeighborhoodChoices = (
         ('Al Muruj', 'Al Muruj'),
         ('Al Maseef', 'Al Maseef'),
+        ('An Nakheel', 'An Nakheel'),
+        ('Dhahrat Laban', 'Dhahrat Laban'),
+        ('Al Olaya', 'Al Olaya'),
+        ('Ar Rawdah', 'Ar Rawdah'),
+        ('King Faisal Dt.', 'King Faisal Dt.'),
+        ('Qurtubah', 'Qurtubah'),
+        ('Ishbiliyah', 'Ishbiliyah'),
+        ('Hittin', 'Hittin'),
+        ('Al Khaleej', 'Al Khaleej'),
+        ('Al Izdihar', 'Al Izdihar'),
+        ('Al Mughrizat', 'Al Mughrizat'),
+        ('An Nuzhah', 'An Nuzhah'),
+        ('At Taawun', 'At Taawun'),
+        ('Al Wahah', 'Al Wahah'),
         ('Al Mursalat', 'Al Mursalat')
+
+
     )
     CityChoices = (
         ('Riyadh', 'Riyadh'),
