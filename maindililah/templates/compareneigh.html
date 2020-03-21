@@ -44,22 +44,23 @@
 
 {% block body %}
 
-    <section class="hero-wrap hero-wrap-2 ftco-degree-bg js-fullheight" style="background-image: url('https://i.pinimg.com/originals/37/9c/cb/379ccba5a68397e5366956db60585819.png');" data-stellar-background-ratio="0.5">
+    <section class="hero-wrap hero-wrap-2 ftco-degree-bg js-fullheight" style="background-image: url('https://c.top4top.io/p_1518pt8rl1.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
           <div class="col-md-9 ftco-animate pb-5 text-center">
-            <h1 class="mb-3 bread">{{ neighbor.NeighborhoodName }} VS {{ neighbor1.NeighborhoodName }}</h1>
+              <div class="testoooo1">
+            <h1 class="mb-3 bread" style="color: white; font-family: Capriola">{{ neighbor.NeighborhoodName }} VS {{ neighbor1.NeighborhoodName }}</h1>
 
-            <h4>Category Comparison</h4>
+            <h4 style="color: white; font-family: Capriola">Category Comparison</h4>
             <form action="{% url 'comparecategory' name=neighbor.NeighborhoodName name1=neighbor1.NeighborhoodName %}" method="post">
         {% csrf_token %}
-        <label>Price:</label>
+        <label style="color: white; font-family: Capriola">Price:</label>
         <select name="Price">
              <option value="0">Low Price</option>
              <option value="1">High Price</option>
         </select>
-        <label>Population:</label>
+        <label style="color: white; font-family: Capriola">Population:</label>
         <select name="Population" id="id_Population">
             <option value="0">Fewer People</option>
             <option value="1">More People</option>
@@ -67,6 +68,7 @@
 
         <button type="submit" class="btn btn-warning">Compare!</button>
     </form>
+              </div>
 
           </div>
         </div>

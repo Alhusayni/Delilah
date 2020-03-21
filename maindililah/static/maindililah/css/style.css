@@ -9991,8 +9991,19 @@ li.nav-item {
 }
 
 .backgroundmain{
-    background: rgba(25, 0, 8, 0.42);
+    background: rgba(25, 0, 8, 0.68);
     margin: 10px;
     border-radius: 10px;
+  padding: 10px 0px 10px 0px;
+
+}
+
+.testoooo1{
+    background: rgba(25, 0, 8, 0.68);
+    margin: 10px;
+    border-radius: 10px;
+  padding: 10px 0px 10px 0px;
+
+
 
 }

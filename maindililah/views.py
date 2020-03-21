@@ -444,7 +444,7 @@ def reportReply(request, id):
 
 
 def reportsPage(request):
-    if not request.user.is_superuser:
+    if not request.user.is_staff:
         raise Http404('not allowed only for superusers')
     revReport = ReportReview.objects.all()
     repReport = ReportReply.objects.all()
