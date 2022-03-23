@@ -129,10 +129,10 @@ MEDIA_URL = '/media/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
+EMAIL_PORT = 
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'dililahsa@gmail.com'
-EMAIL_HOST_PASSWORD = 'Stetsondililah'
+EMAIL_HOST_USER = '@gmail.com'
+EMAIL_HOST_PASSWORD = ''
 
 RECAPTCHA_PUBLIC_KEY = '6Lc7OdwUAAAAAMjIMuicSJ2PwEpBAgBEg_5_0uHw'
 RECAPTCHA_PRIVATE_KEY = '6Lc7OdwUAAAAAJaLseh99PbUDFHUHjlFX7TJ-yQu'
